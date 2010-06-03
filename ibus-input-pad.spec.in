@@ -12,8 +12,6 @@ Source0:    http://ibus.googlecode.com/files/%{name}-%{version}.tar.gz
 
 BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-BuildRequires:  coreutils
-BuildRequires:  gcc
 BuildRequires:  gettext-devel
 BuildRequires:  glib2-devel             >= %glib2_version
 BuildRequires:  gtk2-devel
@@ -21,7 +19,6 @@ BuildRequires:  libtool
 BuildRequires:  ibus-devel
 BuildRequires:  intltool
 BuildRequires:  pkgconfig
-BuildRequires:  sed
 Requires:  glib2        >= %glib2_version
 Requires:  gtk2
 Requires:  ibus
