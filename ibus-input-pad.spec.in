@@ -1,0 +1,58 @@
+%define sub_version             @libinput_pad_VERSION@
+%define glib2_version           2.8
+
+Name:       @PACKAGE_NAME@
+Version:    @PACKAGE_VERSION@
+Release:    1%{?dist}
+Summary:    Input Pad for IBus
+License:    GPLv2+
+Group:      System Environment/Libraries
+URL:        http://code.google.com/p/ibus/
+Source0:    http://ibus.googlecode.com/files/%{name}-%{version}.tar.gz
+
+BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+
+BuildRequires:  coreutils
+BuildRequires:  gcc
+BuildRequires:  gettext-devel
+BuildRequires:  glib2-devel             >= %glib2_version
+BuildRequires:  gtk2-devel
+BuildRequires:  libtool
+BuildRequires:  ibus-devel
+BuildRequires:  intltool
+BuildRequires:  pkgconfig
+BuildRequires:  sed
+Requires:  glib2        >= %glib2_version
+Requires:  gtk2
+Requires:  ibus
+Requires:  ibus-libs
+Requires:  ibus-gtk
+
+%description
+The ibus-input-pad-ibus package contains ibus engine.
+
+%prep
+%setup -q
+
+%build
+%configure --disable-static
+make %{?_smp_mflags}
+
+%install
+rm -rf $RPM_BUILD_ROOT
+make DESTDIR=$RPM_BUILD_ROOT install
+
+%find_lang %{name}
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%files -f %{name}.lang
+%defattr(-,root,root,-)
+%doc AUTHORS COPYING README
+%{_libexecdir}/ibus-engine-input-pad
+%{_datadir}/ibus/component/*
+
+%changelog
+* @DATE_DISPLAY@ Takao Fujiwara <takao.fujiwara1@gmail.com> - @PACKAGE_VERSION@-1
+- Current version.
