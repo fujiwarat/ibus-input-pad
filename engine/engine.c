@@ -25,9 +25,10 @@
 #include <ibus.h>
 #include <glib.h>
 
-#include "engine.h"
 #include <input-pad.h>
 #include <input-pad-group.h>
+#include "engine.h"
+#include "i18n.h"
 
 typedef struct _IBusInputPadEngine IBusInputPadEngine;
 typedef struct _IBusInputPadEngineClass IBusInputPadEngineClass;
@@ -37,7 +38,6 @@ struct _IBusInputPadEngine {
 
     /* members */
     IBusPropList   *prop_list;
-    IBusProperty   *property;
     void           *window_data;
     GSList         *str_list;
 };
@@ -63,9 +63,14 @@ static void ibus_input_pad_engine_enable    (IBusEngine        *engine);
 static void ibus_input_pad_engine_disable   (IBusEngine        *engine);
 static void ibus_input_pad_engine_focus_in  (IBusEngine        *engine);
 static void ibus_input_pad_engine_focus_out (IBusEngine        *engine);
+static void ibus_input_pad_engine_property_activate
+                                            (IBusEngine        *engine,
+                                             const char        *prop_name,
+                                             guint              prop_state);
 
 
 static IBusEngineClass *parent_class = NULL;
+static void *input_pad_window;
 
 static unsigned int
 on_window_button_pressed (gpointer window_data,
@@ -114,17 +119,48 @@ ibus_input_pad_engine_class_init (IBusInputPadEngineClass *klass)
     engine_class->disable = ibus_input_pad_engine_disable;
     engine_class->focus_in = ibus_input_pad_engine_focus_in;
     engine_class->focus_out = ibus_input_pad_engine_focus_out;
+    engine_class->property_activate = ibus_input_pad_engine_property_activate;
 }
 
 static void
 ibus_input_pad_engine_init (IBusInputPadEngine *engine)
 {
+    IBusText *label;
+    IBusText *tooltip;
+    IBusProperty *input_pad_prop;
+    IBusProperty *prop;
+    IBusPropList *prop_list;
+
+    engine->prop_list = ibus_prop_list_new ();
+    g_object_ref_sink (engine->prop_list);
+
+    label = ibus_text_new_from_string (_("Setup Input Pad"));
+    tooltip = ibus_text_new_from_string (_("Configure Input Pad engine"));
+    input_pad_prop = ibus_property_new ("ibus-shared-menu",
+                                        PROP_TYPE_MENU,
+                                        label,
+                                        "ibus-setup",
+                                        tooltip,
+                                        TRUE, TRUE, PROP_STATE_UNCHECKED, NULL);
+    ibus_prop_list_append (engine->prop_list, input_pad_prop);
+
+    prop_list = ibus_prop_list_new ();
+
+    label = ibus_text_new_from_string (_("Show Input Pad"));
+    tooltip = ibus_text_new_from_string (_("Show Input Pad"));
+    prop = ibus_property_new ("show-input-pad",
+                              PROP_TYPE_NORMAL,
+                              label,
+                              DATAROOTDIR "/pixmaps/input-pad.png",
+                              tooltip,
+                              TRUE, TRUE, PROP_STATE_UNCHECKED, NULL);
+    ibus_prop_list_append (prop_list, prop);
+    ibus_property_set_sub_props (input_pad_prop, prop_list);
+
+    if (input_pad_window == NULL)
+        input_pad_window = input_pad_window_new (TRUE);
     if (engine->window_data == NULL)
-        engine->window_data = input_pad_window_new (TRUE);
-    g_signal_connect (G_OBJECT (engine->window_data),
-                      "button-pressed",
-                      G_CALLBACK (on_window_button_pressed), (gpointer) engine);
-    input_pad_window_show (engine->window_data);
+        engine->window_data = input_pad_window;
 }
 
 static GObject*
@@ -163,6 +199,10 @@ ibus_input_pad_engine_destroy (IBusObject *object)
 {
     IBusInputPadEngine *engine = (IBusInputPadEngine *) object;
 
+    if (engine->prop_list) {
+        g_object_unref (engine->prop_list);
+        engine->prop_list = NULL;
+    }
     if (engine->str_list) {
         free_str_list (engine->str_list);
         engine->str_list = NULL;
@@ -186,14 +226,12 @@ ibus_input_pad_engine_process_key_event (IBusEngine    *engine,
 static void
 ibus_input_pad_engine_enable (IBusEngine *engine)
 {
-    input_pad_window_show (((IBusInputPadEngine *) engine)->window_data);
     parent_class->enable (engine);
 }
 
 static void
 ibus_input_pad_engine_disable (IBusEngine *engine)
 {
-    input_pad_window_hide (((IBusInputPadEngine *) engine)->window_data);
     parent_class->disable (engine);
 }
 
@@ -201,28 +239,83 @@ static void
 ibus_input_pad_engine_focus_in (IBusEngine *engine)
 {
     IBusInputPadEngine *input_pad = (IBusInputPadEngine *) engine;
-    gchar *str;
-    GSList *str_list;
+
+    g_return_if_fail (input_pad->window_data != NULL);
+
+    ibus_engine_register_properties (engine, input_pad->prop_list);
 
     parent_class->focus_in (engine);
-    str_list = input_pad->str_list;
-    while (str_list) {
-        str = (gchar *) str_list->data;
-        ibus_input_pad_engine_commit_str (engine, str);
-        g_free (str);
-        str_list->data = NULL;
-        str_list = str_list->next;
-    }
-    if (input_pad->str_list) {
-        g_slist_free (input_pad->str_list);
-        input_pad->str_list = NULL;
-    }
+
+    g_signal_connect (G_OBJECT (input_pad->window_data),
+                      "button-pressed",
+                      G_CALLBACK (on_window_button_pressed), (gpointer) engine);
 }
 
 static void
 ibus_input_pad_engine_focus_out (IBusEngine *engine)
 {
+    IBusInputPadEngine *input_pad = (IBusInputPadEngine *) engine;
+
+    g_return_if_fail (input_pad->window_data != NULL);
+
     parent_class->focus_out (engine);
+
+    g_signal_handlers_disconnect_by_func (G_OBJECT (input_pad->window_data),
+                                          G_CALLBACK (on_window_button_pressed),
+                                          (gpointer) engine);
+}
+
+#if 0
+static void
+update_show_input_pad_label (IBusInputPadEngine *engine,
+                             gboolean            is_shown)
+{
+    IBusProperty *input_pad_prop = ibus_prop_list_get (engine->prop_list, 0);
+    IBusProperty *prop;
+    IBusPropList *props;
+    IBusText *label;
+
+    g_return_if_fail (input_pad_prop != NULL);
+
+    props = input_pad_prop->sub_props;
+    g_return_if_fail (props != NULL);
+
+    prop = ibus_prop_list_get (props, 0);
+    g_return_if_fail (prop && prop->label && prop->label->text);
+    if (is_shown) {
+        label = ibus_text_new_from_string (_("Hide Input Pad"));
+    } else {
+        label = ibus_text_new_from_string (_("Show Input Pad"));
+    }
+    ibus_property_set_label (prop, label);
+    ibus_property_set_tooltip (prop, label);
+    ibus_engine_update_property ((IBusEngine*) engine, prop);
+}
+#endif
+
+static void
+ibus_input_pad_engine_property_activate (IBusEngine *engine,
+                                         const char *prop_name,
+                                         guint       prop_state)
+{
+    gboolean is_shown = FALSE;
+
+    g_return_if_fail (prop_name != NULL);
+    g_return_if_fail (engine != NULL);
+
+    if (!g_strcmp0 (prop_name, "show-input-pad")) {
+        void *window = ((IBusInputPadEngine *) engine)->window_data;
+        // TODO: Update menu item label?
+        /* is_shown = input_pad_window_get_visible (window); */
+        if (is_shown) {
+            input_pad_window_hide (window);
+        } else {
+            input_pad_window_show (window);
+        }
+#if 0
+        update_show_input_pad_label ((IBusInputPadEngine *) engine, is_shown);
+#endif
+    }
 }
 
 GType

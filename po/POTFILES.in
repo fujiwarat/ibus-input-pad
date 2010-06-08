@@ -1,3 +1,4 @@
 # Files with translatable strings.
 # Please keep this file in alphabetical order.
+engine/engine.c
 engine/main.c

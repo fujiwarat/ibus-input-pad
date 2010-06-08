@@ -91,9 +91,6 @@ start_component (int argc, char **argv)
 int
 main (int argc, char **argv)
 {
-    GError *error = NULL;
-    GOptionContext *context;
-
     setlocale (LC_ALL, "");
 
     bindtextdomain(GETTEXT_PACKAGE, IBUS_LOCALEDIR);
@@ -101,4 +98,6 @@ main (int argc, char **argv)
     textdomain(GETTEXT_PACKAGE);
 
     start_component (argc, argv);
+
+    return 0;
 }

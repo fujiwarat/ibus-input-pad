@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ibus-input-pad HEAD\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/ibus/issues/entry\n"
-"POT-Creation-Date: 2010-06-03 12:08+0900\n"
+"POT-Creation-Date: 2010-06-08 18:54+0900\n"
 "PO-Revision-Date: 2010-05-10 17:54+0900\n"
 "Last-Translator: Takao Fujiwara <takao.fujiwara1@gmail.com>\n"
 "Language-Team: Japanese\n"
@@ -15,6 +15,22 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../engine/engine.c:137
+msgid "Setup Input Pad"
+msgstr "インプットパッドの設定"
+
+#: ../engine/engine.c:138
+msgid "Configure Input Pad engine"
+msgstr "インプットパッドエンジンを構成します"
+
+#: ../engine/engine.c:149 ../engine/engine.c:150 ../engine/engine.c:288
+msgid "Show Input Pad"
+msgstr "インプットパッドを表示する"
+
+#: ../engine/engine.c:286
+msgid "Hide Input Pad"
+msgstr "インプットパッドを隠す"
 
 #: ../engine/main.c:55 ../engine/main.c:64 ../engine/main.c:65
 msgid "Input Pad"

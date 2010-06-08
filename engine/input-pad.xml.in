@@ -9,6 +9,7 @@
 	<license>GPL</license>
 	<homepage>http://code.google.com/p/ibus</homepage>
 	<textdomain>@GETTEXT_PACKAGE@</textdomain>
+	<shared_type>1</shared_type>
 
 	<engines>
 		<engine>
