@@ -1,5 +1,4 @@
 %define sub_version             @libinput_pad_VERSION@
-%define glib2_version           2.8
 
 Name:       @PACKAGE_NAME@
 Version:    @PACKAGE_VERSION@
@@ -13,20 +12,15 @@ Source0:    http://ibus.googlecode.com/files/%{name}-%{version}.tar.gz
 BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  gettext-devel
-BuildRequires:  glib2-devel             >= %glib2_version
 BuildRequires:  gtk2-devel
 BuildRequires:  libtool
 BuildRequires:  ibus-devel
+BuildRequires:  input-pad-devel
 BuildRequires:  intltool
-BuildRequires:  pkgconfig
-Requires:  glib2        >= %glib2_version
-Requires:  gtk2
-Requires:  ibus
-Requires:  ibus-libs
-Requires:  ibus-gtk
+Requires:       ibus
 
 %description
-The ibus-input-pad-ibus package contains ibus engine.
+The input pad engine for IBus platform.
 
 %prep
 %setup -q
@@ -37,7 +31,7 @@ make %{?_smp_mflags}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-make DESTDIR=$RPM_BUILD_ROOT install
+make install DESTDIR=$RPM_BUILD_ROOT INSTALL='install -p'
 
 %find_lang %{name}
 
