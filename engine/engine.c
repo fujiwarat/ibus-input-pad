@@ -84,7 +84,9 @@ on_window_button_pressed (gpointer window_data,
     IBusInputPadEngine *engine = (IBusInputPadEngine *) data;
 
     if (str == NULL ||
-        (InputPadTableType) type != INPUT_PAD_TABLE_TYPE_CHARS) {
+        ((InputPadTableType) type != INPUT_PAD_TABLE_TYPE_CHARS &&
+         (InputPadTableType) type != INPUT_PAD_TABLE_TYPE_STRINGS &&
+         (InputPadTableType) type != INPUT_PAD_TABLE_TYPE_COMMANDS)) {
         return FALSE;
     }
     if (keysym > 0) {
@@ -93,6 +95,22 @@ on_window_button_pressed (gpointer window_data,
 
     ibus_input_pad_engine_commit_str (IBUS_ENGINE (engine), str);
     return TRUE;
+}
+
+static void
+on_window_destroy (gpointer window_data, gpointer data)
+{
+    IBusInputPadEngine *engine = (IBusInputPadEngine *) data;
+
+    g_signal_handlers_disconnect_by_func (G_OBJECT (engine->window_data),
+                                          G_CALLBACK (on_window_button_pressed),
+                                          (gpointer) engine);
+    g_signal_handlers_disconnect_by_func (G_OBJECT (engine->window_data),
+                                          G_CALLBACK (on_window_destroy),
+                                          (gpointer) engine);
+
+    input_pad_window = NULL;
+    engine->window_data = NULL;
 }
 
 static void
@@ -155,10 +173,20 @@ ibus_input_pad_engine_init (IBusInputPadEngine *engine)
                               tooltip,
                               TRUE, TRUE, PROP_STATE_UNCHECKED, NULL);
     ibus_prop_list_append (prop_list, prop);
+
+    label = ibus_text_new_from_string (_("Show Input Pad (Keyboard Only)"));
+    tooltip = ibus_text_new_from_string (_("Show Input Pad (Keyboard Only)"));
+    prop = ibus_property_new ("show-input-pad-layout-only",
+                              PROP_TYPE_NORMAL,
+                              label,
+                              DATAROOTDIR "/pixmaps/input-pad.png",
+                              tooltip,
+                              TRUE, TRUE, PROP_STATE_UNCHECKED, NULL);
+    ibus_prop_list_append (prop_list, prop);
+
     ibus_property_set_sub_props (input_pad_prop, prop_list);
 
-    if (input_pad_window == NULL)
-        input_pad_window = input_pad_window_new (TRUE);
+    /* FIXME: This is not used currently? */
     if (engine->window_data == NULL)
         engine->window_data = input_pad_window;
 }
@@ -208,6 +236,9 @@ ibus_input_pad_engine_destroy (IBusObject *object)
         engine->str_list = NULL;
     }
     if (engine->window_data) {
+        g_signal_handlers_disconnect_by_func (G_OBJECT (engine->window_data),
+                                              G_CALLBACK (on_window_destroy),
+                                              (gpointer) engine);
         input_pad_window_destroy (engine->window_data);
         engine->window_data = NULL;
     }
@@ -226,13 +257,27 @@ ibus_input_pad_engine_process_key_event (IBusEngine    *engine,
 static void
 ibus_input_pad_engine_enable (IBusEngine *engine)
 {
+    IBusInputPadEngine *input_pad = (IBusInputPadEngine *) engine;
+
     parent_class->enable (engine);
+    input_pad->window_data = input_pad_window;
+    if (input_pad->window_data) {
+        input_pad_window_set_char_button_sensitive (input_pad->window_data,
+                                                    TRUE);
+    }
 }
 
 static void
 ibus_input_pad_engine_disable (IBusEngine *engine)
 {
+    IBusInputPadEngine *input_pad = (IBusInputPadEngine *) engine;
+
     parent_class->disable (engine);
+    input_pad->window_data = input_pad_window;
+    if (input_pad->window_data) {
+        input_pad_window_set_char_button_sensitive (input_pad->window_data,
+                                                    FALSE);
+    }
 }
 
 static void
@@ -240,15 +285,19 @@ ibus_input_pad_engine_focus_in (IBusEngine *engine)
 {
     IBusInputPadEngine *input_pad = (IBusInputPadEngine *) engine;
 
-    g_return_if_fail (input_pad->window_data != NULL);
-
     ibus_engine_register_properties (engine, input_pad->prop_list);
 
     parent_class->focus_in (engine);
 
+    input_pad->window_data = input_pad_window;
+    if (input_pad->window_data == NULL) {
+        return;
+    }
+
     g_signal_connect (G_OBJECT (input_pad->window_data),
                       "button-pressed",
                       G_CALLBACK (on_window_button_pressed), (gpointer) engine);
+    input_pad_window_reorder_button_pressed (input_pad->window_data);
 }
 
 static void
@@ -256,9 +305,12 @@ ibus_input_pad_engine_focus_out (IBusEngine *engine)
 {
     IBusInputPadEngine *input_pad = (IBusInputPadEngine *) engine;
 
-    g_return_if_fail (input_pad->window_data != NULL);
-
     parent_class->focus_out (engine);
+
+    input_pad->window_data = input_pad_window;
+    if (input_pad->window_data == NULL) {
+        return;
+    }
 
     g_signal_handlers_disconnect_by_func (G_OBJECT (input_pad->window_data),
                                           G_CALLBACK (on_window_button_pressed),
@@ -299,18 +351,37 @@ ibus_input_pad_engine_property_activate (IBusEngine *engine,
                                          guint       prop_state)
 {
     gboolean is_shown = FALSE;
+    IBusInputPadEngine *input_pad = (IBusInputPadEngine *) engine;
 
     g_return_if_fail (prop_name != NULL);
     g_return_if_fail (engine != NULL);
 
-    if (!g_strcmp0 (prop_name, "show-input-pad")) {
-        void *window = ((IBusInputPadEngine *) engine)->window_data;
+    if (!g_strcmp0 (prop_name, "show-input-pad") ||
+        !g_strcmp0 (prop_name, "show-input-pad-layout-only")) {
+        void *window;
+
+        if (input_pad_window == NULL || input_pad->window_data == NULL) {
+            input_pad_window = input_pad_window_new (TRUE);
+            input_pad->window_data = input_pad_window;
+            g_signal_connect (G_OBJECT (input_pad->window_data),
+                             "destroy",
+                             G_CALLBACK (on_window_destroy), (gpointer) engine);
+            ibus_input_pad_engine_focus_in (engine);
+        }
+        window = input_pad->window_data;
         // TODO: Update menu item label?
         /* is_shown = input_pad_window_get_visible (window); */
         if (is_shown) {
             input_pad_window_hide (window);
         } else {
             input_pad_window_show (window);
+            if (!g_strcmp0 (prop_name, "show-input-pad-layout-only")) {
+                input_pad_window_set_show_table (window,
+                                                 INPUT_PAD_WINDOW_SHOW_TABLE_TYPE_NOTHING);
+            } else {
+                input_pad_window_set_show_table (window,
+                                                 INPUT_PAD_WINDOW_SHOW_TABLE_TYPE_CUSTOM);
+            }
         }
 #if 0
         update_show_input_pad_label ((IBusInputPadEngine *) engine, is_shown);
