@@ -1,0 +1,384 @@
+<?xml version="1.0" standalone="no"?> <!--*- mode: xml -*-->
+<interface>
+  <object class="GtkListStore" id="char_table_model">
+    <columns>
+      <column type="guint"/>
+      <column type="gchararray"/>
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0">0</col>
+        <col id="2" translatable="yes">Nothing</col>
+      </row>
+      <row>
+        <col id="0">1</col>
+        <col id="2" translatable="yes">Custom</col>
+      </row>
+      <row>
+        <col id="0">2</col>
+        <col id="2" translatable="yes">All</col>
+      </row>
+    </data>
+  </object>
+  <object class="GtkListStore" id="layout_table_model">
+    <columns>
+      <column type="guint"/>
+      <column type="gchararray"/>
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0">0</col>
+        <col id="2" translatable="yes">Nothing</col>
+      </row>
+      <row>
+        <col id="0">1</col>
+        <col id="2" translatable="yes">Default</col>
+      </row>
+    </data>
+  </object>
+  <object class="GtkDialog" id="setup_dialog">
+    <property name="title" translatable="yes">IBus-Input-Pad Setup</property>
+    <property name="accept-focus">False</property>
+    <child internal-child="vbox">
+      <object class="GtkVBox" id="vbox1">
+        <property name="visible">True</property>
+        <property name="border-width">10</property>
+        <property name="spacing">12</property>
+        <child>
+          <object class="GtkNotebook" id="notebook1">
+            <property name="visible">True</property>
+            <child>
+              <object class="GtkVBox" id="vbox2">
+                <property name="visible">True</property>
+                <property name="orientation">vertical</property>
+                <property name="spacing">12</property>
+                <child>
+                  <object class="GtkFrame" id="default_frame">
+                    <property name="visible">True</property>
+                    <property name="shadow_type">none</property>
+                    <child>
+                      <object class="GtkAlignment" id="alignment1">
+                        <property name="visible">True</property>
+                        <!-- Use ypad instead of top_padding -->
+                        <property name="bottom_padding">12</property>
+                        <property name="left_padding">12</property>
+                        <property name="right_padding">12</property>
+                        <child>
+                          <object class="GtkVBox" id="default_vbox">
+                            <property name="visible">True</property>
+                            <child>
+                              <object class="GtkTable" id="default_table">
+                                <property name="visible">True</property>
+                                <property name="n_rows">3</property>
+                                <property name="n_columns">2</property>
+                                <property name="column_spacing">12</property>
+                                <property name="row_spacing">6</property>
+                                <child>
+                                  <object class="GtkLabel" id="label4">
+                                    <property name="visible">True</property>
+                                    <property name="label" translatable="yes">_Character Table Type:</property>
+                                    <property name="tooltip_text" translatable="yes">Whether you show the character table or not</property>
+                                    <property name="use_underline">True</property>
+                                    <property name="justify">right</property>
+                                    <property name="xalign">0</property>
+                                  </object> 
+                                  <packing>
+                                    <property name="x_options">GTK_FILL</property>
+                                  </packing> 
+                                </child>
+                                <child>
+                                  <object class="GtkComboBox" id="char_table_combo_box">
+                                    <property name="visible">True</property>
+                                    <property name="add_tearoffs">False</property>
+                                    <property name="focus_on_click">True</property>
+                                    <property name="model">char_table_model</property>
+                                    <child>
+                                      <object class="GtkCellRendererText" id="renderer1"/>
+                                      <attributes>
+                                        <attribute name="text">2</attribute>
+                                      </attributes>
+                                    </child>
+                                  </object>
+                                  <packing>
+                                    <property name="left_attach">1</property>
+                                    <property name="right_attach">2</property>
+                                  </packing> 
+                                </child>
+                                <child>
+                                  <object class="GtkLabel" id="label5">
+                                    <property name="visible">True</property>
+                                    <property name="label" translatable="yes">_Keyboard Layout Type:</property>
+                                    <property name="tooltip_text" translatable="yes">Whether you show the keyboard layout or not</property>
+                                    <property name="use_underline">True</property>
+                                    <property name="justify">right</property>
+                                    <property name="xalign">0</property>
+                                  </object> 
+                                  <packing>
+                                    <property name="x_options">GTK_FILL</property>
+                                    <property name="top_attach">1</property>
+                                    <property name="bottom_attach">2</property>
+                                  </packing> 
+                                </child>
+                                <child>
+                                  <object class="GtkComboBox" id="layout_table_combo_box">
+                                    <property name="visible">True</property>
+                                    <property name="add_tearoffs">False</property>
+                                    <property name="focus_on_click">True</property>
+                                    <property name="model">layout_table_model</property>
+                                    <child>
+                                      <object class="GtkCellRendererText" id="renderer2"/>
+                                      <attributes>
+                                        <attribute name="text">2</attribute>
+                                      </attributes>
+                                    </child>
+                                  </object>
+                                  <packing>
+                                    <property name="left_attach">1</property>
+                                    <property name="right_attach">2</property>
+                                    <property name="top_attach">1</property>
+                                    <property name="bottom_attach">2</property>
+                                  </packing> 
+                                </child>
+                                <!-- The kbdui extension is checked on runtime.
+                                <child></child>
+                                <child></child>
+                                -->
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                                <property name="position">0</property>
+                              </packing>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child type="label">
+                      <object class="GtkLabel" id="label1">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">&lt;b&gt;Default Appearance&lt;/b&gt;</property>
+                        <property name="use_markup">True</property>
+                        <property name="ypad">12</property>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkFrame" id="keyboard_only_frame">
+                    <property name="visible">True</property>
+                    <property name="shadow_type">none</property>
+                    <child>
+                      <object class="GtkAlignment" id="alignment2">
+                        <property name="visible">True</property>
+                        <property name="top_padding">12</property>
+                        <property name="bottom_padding">12</property>
+                        <property name="left_padding">12</property>
+                        <property name="right_padding">12</property>
+                        <child>
+                          <object class="GtkVBox" id="keyboard_only_vbox">
+                            <property name="visible">True</property>
+                            <child>
+                              <object class="GtkTable" id="keyboard_only_table">
+                                <property name="visible">True</property>
+                                <property name="n_rows">1</property>
+                                <property name="n_columns">2</property>
+                                <property name="column_spacing">12</property>
+                                <property name="row_spacing">6</property>
+                                <!-- The kbdui extension is checked on runtime.
+                                <child></child>
+                                -->
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="fill">False</property>
+                                <property name="position">0</property>
+                              </packing>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child type="label">
+                      <object class="GtkLabel" id="label6">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">&lt;b&gt;Keyboard Only Appearance&lt;/b&gt;</property>
+                        <property name="use_markup">True</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child type="tab">
+              <object class="GtkLabel" id="label2">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">General</property>
+              </object>
+              <packing>
+                <property name="tab_fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkVBox" id="about_vbox">
+                <property name="visible">True</property>
+                <property name="orientation">vertical</property>
+                <property name="border_width">10</property>
+                <!--
+                <child></child>
+                -->
+              </object>
+              <packing>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child type="tab">
+              <object class="GtkLabel" id="label7">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">About</property>
+              </object>
+              <packing>
+                <property name="tab_fill">False</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child internal-child="action_area">
+          <object class="GtkHButtonBox" id="hbuttonbox1">
+            <property name="visible">True</property>
+            <property name="homogeneous">True</property>
+            <property name="layout_style">end</property>
+            <child>
+              <object class="GtkButton" id="button_apply">
+                <property name="label">gtk-apply</property>
+                <property name="visible">True</property>
+                <property name="use_stock">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="button_cancel">
+                <property name="label">gtk-cancel</property>
+                <property name="visible">True</property>
+                <property name="use_stock">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="button_ok">
+                <property name="label">gtk-ok</property>
+                <property name="visible">True</property>
+                <property name="use_stock">True</property>
+                <property name="receives_default">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="pack_type">end</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkMessageDialog" id="dialog_ok">
+    <property name="border_width">5</property>
+    <property name="resizable">False</property>
+    <property name="modal">True</property>
+    <property name="accept-focus">False</property>
+    <property name="window_position">center-on-parent</property>
+    <property name="type_hint">dialog</property>
+    <property name="skip_taskbar_hint">True</property>
+    <property name="message_type">question</property>
+    <property name="buttons">ok-cancel</property>
+    <property name="text" translatable="yes">Confirm</property>
+    <property name="secondary_text" translatable="yes">Are you sure to close Setup?</property>
+    <child internal-child="vbox">
+      <object class="GtkVBox" id="vbox50">
+        <property name="visible">True</property>
+        <property name="spacing">2</property>
+        <child internal-child="action_area">
+          <object class="GtkHButtonBox" id="hbuttonbox50">
+            <property name="visible">True</property>
+            <property name="layout_style">end</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="pack_type">end</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkMessageDialog" id="dialog_cancel">
+    <property name="border_width">5</property>
+    <property name="resizable">False</property>
+    <property name="modal">True</property>
+    <property name="accept-focus">False</property>
+    <property name="window_position">center-on-parent</property>
+    <property name="type_hint">dialog</property>
+    <property name="skip_taskbar_hint">True</property>
+    <property name="message_type">question</property>
+    <property name="buttons">ok-cancel</property>
+    <property name="text" translatable="yes">Confirm</property>
+    <property name="secondary_text" translatable="yes">Are you sure to close Setup without saving configure?</property>
+    <child internal-child="vbox">
+      <object class="GtkVBox" id="vbox60">
+        <property name="visible">True</property>
+        <property name="spacing">2</property>
+        <child internal-child="action_area">
+          <object class="GtkHButtonBox" id="hbuttonbox60">
+            <property name="visible">True</property>
+            <property name="layout_style">end</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="pack_type">end</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkAboutDialog" id="about_dialog">
+    <property name="program-name">IBus-Input-Pad</property>
+    <property name="copyright">Copyright (c) 2010 Takao Fujiwara
+Copyright (c) 2010 Red Hat, Inc.</property>
+    <property name="comments" translatable="yes">The input pad engine for IBus platform</property>
+    <property name="license">GPL</property>
+    <property name="website">http://code.google.com/p/input-pad/</property>
+    <property name="authors">Takao Fujiwara &lt;takao.fujiwara1@gmail.com&gt;</property>
+    <property name="translator-credits" translatable="yes">translator_credits</property>
+    <property name="logo-icon-name">input-pad</property>
+    <property name="wrap-license">True</property>
+  </object>
+</interface>

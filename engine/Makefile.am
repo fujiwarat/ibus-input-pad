@@ -24,7 +24,9 @@ noinst_DIST = \
 
 INCLUDES = \
 	-I$(top_srcdir)                                                    \
+	-I$(top_srcdir)/setup                                              \
 	-DDATAROOTDIR=\""$(datarootdir)"\"                                 \
+	-DLIBEXECDIR=\""$(libexecdir)"\"                                   \
 	$(NULL)
 
 libexec_PROGRAMS = ibus-engine-input-pad
@@ -47,6 +49,7 @@ ibus_engine_input_pad_LDFLAGS = \
 	$(NULL)
 
 ibus_engine_input_pad_LDADD = \
+	$(top_builddir)/setup/libiconfig.la                     \
 	$(GLIB2_LIBS)                                           \
 	$(IBUS_LIBS)                                            \
 	$(INPUT_PAD_LIBS)                                       \

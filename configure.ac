@@ -91,6 +91,7 @@ AC_CONFIG_FILES([ po/Makefile.in
 Makefile
 ibus-input-pad.spec
 engine/Makefile
+setup/Makefile
 ])
 
 AC_OUTPUT

@@ -2,3 +2,5 @@
 # Please keep this file in alphabetical order.
 engine/engine.c
 engine/main.c
+setup/setup-gtk2.c
+[type: gettext/glade]setup/setup-gtk2.ui

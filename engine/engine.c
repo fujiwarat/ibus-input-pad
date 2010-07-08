@@ -29,6 +29,7 @@
 #include <input-pad-group.h>
 #include "engine.h"
 #include "i18n.h"
+#include "iconfig-gtk2.h"
 
 typedef struct _IBusInputPadEngine IBusInputPadEngine;
 typedef struct _IBusInputPadEngineClass IBusInputPadEngineClass;
@@ -71,6 +72,7 @@ static void ibus_input_pad_engine_property_activate
 
 static IBusEngineClass *parent_class = NULL;
 static void *input_pad_window;
+static IBusInputPadConfig *config = NULL;
 
 static unsigned int
 on_window_button_pressed (gpointer window_data,
@@ -152,8 +154,8 @@ ibus_input_pad_engine_init (IBusInputPadEngine *engine)
     engine->prop_list = ibus_prop_list_new ();
     g_object_ref_sink (engine->prop_list);
 
-    label = ibus_text_new_from_string (_("Setup Input Pad"));
-    tooltip = ibus_text_new_from_string (_("Configure Input Pad engine"));
+    label = ibus_text_new_from_string (_("Launch Input Pad"));
+    tooltip = ibus_text_new_from_string (_("Launch Input Pad"));
     input_pad_prop = ibus_property_new ("ibus-shared-menu",
                                         PROP_TYPE_MENU,
                                         label,
@@ -185,6 +187,16 @@ ibus_input_pad_engine_init (IBusInputPadEngine *engine)
     ibus_prop_list_append (prop_list, prop);
 
     ibus_property_set_sub_props (input_pad_prop, prop_list);
+
+    label = ibus_text_new_from_string (_("Setup Input Pad"));
+    tooltip = ibus_text_new_from_string (_("Configure Input Pad"));
+    prop = ibus_property_new ("setup-input-pad",
+                              PROP_TYPE_NORMAL,
+                              label,
+                              "preferences-desktop",
+                              tooltip,
+                              TRUE, TRUE, PROP_STATE_UNCHECKED, NULL);
+    ibus_prop_list_append (engine->prop_list, prop);
 
     /* FIXME: This is not used currently? */
     if (engine->window_data == NULL)
@@ -346,23 +358,92 @@ update_show_input_pad_label (IBusInputPadEngine *engine,
 #endif
 
 static void
+set_keyboard_only_kbdui (void *window)
+{
+    const gchar *section = "engine/input-pad/keyboard_only_table";
+    const gchar *name = NULL;
+    gchar *str = NULL;
+
+    name = "keyboard_theme";
+    ibus_input_pad_config_get_str (config, section, name, &str);
+
+    if (str && g_strcmp0 (str, "default") != 0) {
+        input_pad_window_set_kbdui_name (window, str);
+    } else {
+        input_pad_window_set_kbdui_name (window, NULL);
+    }
+    g_free (str);
+}
+
+static void
+set_default_kbdui (void *window)
+{
+    const gchar *section = "engine/input-pad/default_table";
+    const gchar *name = NULL;
+    gchar *str = NULL;
+
+    name = "keyboard_theme";
+    ibus_input_pad_config_get_str (config, section, name, &str);
+
+    if (str && g_strcmp0 (str, "default") != 0) {
+        input_pad_window_set_kbdui_name (window, str);
+    } else {
+        input_pad_window_set_kbdui_name (window, NULL);
+    }
+    g_free (str);
+}
+
+static void
+show_keyboard_only_table (void *window)
+{
+    input_pad_window_set_show_table (window,
+                                     INPUT_PAD_WINDOW_SHOW_TABLE_TYPE_NOTHING);
+}
+
+static void
+show_default_table (void *window)
+{
+    const gchar *section = "engine/input-pad/default_table";
+    const gchar *name = NULL;
+    int n;
+
+    name = "char_table_combo_box";
+    ibus_input_pad_config_get_int (config, section, name, &n);
+    input_pad_window_set_show_table (window, n);
+
+    name = "layout_table_combo_box";
+    ibus_input_pad_config_get_int (config, section, name, &n);
+    input_pad_window_set_show_layout (window, n);
+}
+
+static void
 ibus_input_pad_engine_property_activate (IBusEngine *engine,
                                          const char *prop_name,
                                          guint       prop_state)
 {
     gboolean is_shown = FALSE;
     IBusInputPadEngine *input_pad = (IBusInputPadEngine *) engine;
+    GError *error = NULL;
+    gchar *argv[2] = { NULL, };
+    gchar *path;
+    const gchar *libexecdir;
 
     g_return_if_fail (prop_name != NULL);
     g_return_if_fail (engine != NULL);
 
     if (!g_strcmp0 (prop_name, "show-input-pad") ||
         !g_strcmp0 (prop_name, "show-input-pad-layout-only")) {
-        void *window;
+        void *window = NULL;
 
         if (input_pad_window == NULL || input_pad->window_data == NULL) {
             input_pad_window = input_pad_window_new (TRUE);
             input_pad->window_data = input_pad_window;
+            if (!g_strcmp0 (prop_name, "show-input-pad-layout-only")) {
+                set_keyboard_only_kbdui (input_pad_window);
+            } else {
+                set_default_kbdui (input_pad_window);
+            }
+
             g_signal_connect (G_OBJECT (input_pad->window_data),
                              "destroy",
                              G_CALLBACK (on_window_destroy), (gpointer) engine);
@@ -376,16 +457,26 @@ ibus_input_pad_engine_property_activate (IBusEngine *engine,
         } else {
             input_pad_window_show (window);
             if (!g_strcmp0 (prop_name, "show-input-pad-layout-only")) {
-                input_pad_window_set_show_table (window,
-                                                 INPUT_PAD_WINDOW_SHOW_TABLE_TYPE_NOTHING);
+                show_keyboard_only_table (window);
             } else {
-                input_pad_window_set_show_table (window,
-                                                 INPUT_PAD_WINDOW_SHOW_TABLE_TYPE_CUSTOM);
+                show_default_table (window);
             }
         }
 #if 0
         update_show_input_pad_label ((IBusInputPadEngine *) engine, is_shown);
 #endif
+    }
+    if (!g_strcmp0 (prop_name, "setup-input-pad")) {
+        libexecdir = g_getenv ("LIBEXECDIR");
+        if (libexecdir == NULL) {
+            libexecdir = LIBEXECDIR;
+        }
+        g_return_if_fail (libexecdir != NULL);
+        path = g_build_filename (libexecdir, "ibus-setup-input-pad", NULL);
+        argv[0] = path;
+        argv[1] = NULL;
+        g_spawn_async (NULL, argv, NULL, 0, NULL, NULL, NULL, &error);
+        g_free (path);
     }
 }
 
@@ -419,10 +510,16 @@ ibus_input_pad_engine_get_type (void)
 void
 ibus_input_pad_init (int *argc, char ***argv, IBusBus *bus)
 {
+    config = ibus_bus_get_input_pad_config (bus);
+    if (config) {
+        g_object_ref_sink (config);
+    }
     input_pad_window_init (argc, argv, 0);
 }
 
 void
 ibus_input_pad_exit (void)
 {
+    g_object_unref (config);
+    config = NULL;
 }

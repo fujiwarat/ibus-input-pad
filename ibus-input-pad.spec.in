@@ -42,7 +42,9 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root,-)
 %doc AUTHORS COPYING README
 %{_libexecdir}/ibus-engine-input-pad
+%{_libexecdir}/ibus-setup-input-pad
 %{_datadir}/ibus/component/*
+%{_datadir}/ibus-input-pad
 
 %changelog
 * @DATE_DISPLAY@ Takao Fujiwara <takao.fujiwara1@gmail.com> - @PACKAGE_VERSION@-1

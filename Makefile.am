@@ -21,6 +21,7 @@
 
 SUBDIRS = \
 	po \
+	setup \
 	engine \
 	$(NULL)
 
