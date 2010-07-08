@@ -154,6 +154,17 @@ ibus_input_pad_engine_init (IBusInputPadEngine *engine)
     engine->prop_list = ibus_prop_list_new ();
     g_object_ref_sink (engine->prop_list);
 
+#ifdef IBUS_DEPRECATED_LANGUAGE_MENU_ITEM
+    label = ibus_text_new_from_string (_("Launch Input Pad"));
+    tooltip = ibus_text_new_from_string (_("Launch Input Pad"));
+    prop = ibus_property_new ("show-input-pad",
+                              PROP_TYPE_NORMAL,
+                              label,
+                              "ibus-setup",
+                              tooltip,
+                              TRUE, TRUE, PROP_STATE_UNCHECKED, NULL);
+    ibus_prop_list_append (engine->prop_list, prop);
+#else
     label = ibus_text_new_from_string (_("Launch Input Pad"));
     tooltip = ibus_text_new_from_string (_("Launch Input Pad"));
     input_pad_prop = ibus_property_new ("ibus-shared-menu",
@@ -187,6 +198,7 @@ ibus_input_pad_engine_init (IBusInputPadEngine *engine)
     ibus_prop_list_append (prop_list, prop);
 
     ibus_property_set_sub_props (input_pad_prop, prop_list);
+#endif
 
     label = ibus_text_new_from_string (_("Setup Input Pad"));
     tooltip = ibus_text_new_from_string (_("Configure Input Pad"));

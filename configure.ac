@@ -70,9 +70,14 @@ PKG_CHECK_MODULES(GTK2, [
     gtk+-2.0
 ])
 
-PKG_CHECK_MODULES(IBUS, [
-    ibus-1.0
-])
+m4_define([ibus_pc_name], [ibus-1.0])
+PKG_CHECK_MODULES(IBUS,
+   [ibus_pc_name >= 1.2.0.20100111],
+   [AC_MSG_NOTICE([IBUS version is ok])],
+   [PKG_CHECK_MODULES(IBUS, ibus_pc_name)
+    AC_MSG_NOTICE([IBUS version is old])
+    AC_DEFINE(IBUS_DEPRECATED_LANGUAGE_MENU_ITEM, 1, [Define if old ibus])]
+)
 
 PKG_CHECK_MODULES(INPUT_PAD, [
     input-pad

@@ -557,8 +557,13 @@ ibus_input_pad_setup_gtk2_dialog_new (IBusInputPadConfig *config)
     if (list == NULL) {
         gtk_widget_hide (keyboard_frame);
     } else {
+#ifdef IBUS_DEPRECATED_LANGUAGE_MENU_ITEM
+        gtk_widget_hide (keyboard_frame);
+        table_add_kbdui_list (default_table, list, config);
+#else
         table_add_kbdui_list (default_table, list, config);
         table_add_kbdui_list (keyboard_table, list, config);
+#endif
         destroy_kbdui_list (list);
     }
 
