@@ -27,7 +27,7 @@ setup_DATA=setup-gtk2.ui
 
 INCLUDES = \
 	-I$(top_srcdir)                                                 \
-	-I../engine                                                     \
+	-I$(top_srcdir)/engine                                          \
 	-DDATAROOTDIR=\""$(datarootdir)"\"                              \
 	-DIBUS_INPUT_PAD_SETUP_UI_FILE=\""$(setupdir)/$(setup_DATA)"\"  \
 	$(NULL)
@@ -82,6 +82,7 @@ ibus_setup_input_pad_LDADD = \
 
 
 EXTRA_DIST = \
+	setup-gtk2.ui                                                   \
 	$(NULL)
 
 CLEANFILES = \
