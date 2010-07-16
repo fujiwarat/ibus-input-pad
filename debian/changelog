@@ -1,0 +1,26 @@
+ibus-input-pad (0.1.2-2ppa3~lucid) lucid; urgency=low
+
+  * Fixed dependency failures.
+    - debian/control: Added libxklavier-dev dependency
+
+ -- Takao Fujiwara <takao.fujiwara1@gmail.com>  Tue, 13 Jul 2010 16:23:52 +0900
+
+ibus-input-pad (0.1.2-2ppa2~lucid) lucid; urgency=low
+
+  * Fixed dependency failures.
+    - debian/control: Added libxml2-dev dependency
+
+ -- Takao Fujiwara <takao.fujiwara1@gmail.com>  Tue, 13 Jul 2010 11:02:52 +0900
+
+ibus-input-pad (0.1.2-2ppa1~lucid) lucid; urgency=low
+
+  * Fixed dependency failures.
+    - debian/control: Added libibus-dev & ibus dependency
+
+ -- Takao Fujiwara <takao.fujiwara1@gmail.com>  Tue, 13 Jul 2010 10:02:52 +0900
+
+ibus-input-pad (0.1.2-1) lucid; urgency=low
+
+  * Initial release
+
+ -- Takao Fujiwara <takao.fujiwara1@gmail.com>  Fri, 09 Jul 2010 16:18:01 +0900

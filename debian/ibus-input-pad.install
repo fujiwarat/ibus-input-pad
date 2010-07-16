@@ -1,0 +1,5 @@
+usr/lib/ibus-input-pad/ibus-engine-input-pad
+usr/lib/ibus-input-pad/ibus-setup-input-pad
+usr/share/ibus/component/input-pad.xml
+usr/share/ibus-input-pad
+usr/share/locale
