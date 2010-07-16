@@ -45,7 +45,6 @@ ibus_engine_input_pad_CFLAGS = \
 	$(NULL)
 
 ibus_engine_input_pad_LDFLAGS = \
-	-rpath $(libdir)/input-pad-$(libinput_pad_VERSION)      \
 	$(NULL)
 
 ibus_engine_input_pad_LDADD = \
