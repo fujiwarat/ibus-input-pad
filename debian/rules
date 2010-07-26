@@ -6,8 +6,6 @@
 
 build:
 	dh $@ --before auto_configure
-	sed -ie '/-rpath $$(libdir)\/input-pad-/d' engine/Makefile.in
-	sed -ie '/-rpath $$(libdir)\/input-pad-/d' setup/Makefile.in
 	dh_auto_configure -- \
 	  --enable-static
 	dh $@ --before auto_test
@@ -19,9 +17,6 @@ override_dh_auto_install:
 
 override_dh_install:
 	dh_install --list-missing --sourcedir=debian/tmp
-
-override_dh_makeshlibs:
-	dh_makeshlibs -Nlibinput-pad-xtest -s
 
 %:
 	dh  $@
