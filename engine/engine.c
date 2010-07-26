@@ -260,11 +260,8 @@ ibus_input_pad_engine_destroy (IBusObject *object)
         engine->str_list = NULL;
     }
     if (engine->window_data) {
-        g_signal_handlers_disconnect_by_func (G_OBJECT (engine->window_data),
-                                              G_CALLBACK (on_window_destroy),
-                                              (gpointer) engine);
         input_pad_window_destroy (engine->window_data);
-        engine->window_data = NULL;
+        g_assert (engine->window_data == NULL);
     }
     IBUS_OBJECT_CLASS (parent_class)->destroy (object);
 }
