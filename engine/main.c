@@ -1,5 +1,5 @@
 /* vim:set et sts=4: */
-/* ibus-input-pad - The input pad for IBus
+/* ibus-input-pad - Input pad for IBus
  * Copyright (C) 2010 Takao Fujiwara <takao.fujiwara1@gmail.com>
  * Copyright (C) 2010 Red Hat, Inc.
  *
@@ -56,7 +56,7 @@ start_component (int argc, char **argv)
                                     "0.1.0",
                                     "GPL",
                                     "Takao Fujiwara <takao.fujiwara1@gmail.com>",
-                                    "http://code.google.com/p/ibus/",
+                                    "http://code.google.com/p/input-pad/",
                                     "",
                                     "ibus-input-pad");
     ibus_component_add_engine (component,

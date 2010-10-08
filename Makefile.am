@@ -1,6 +1,6 @@
 # vim:set noet ts=4:
 #
-# input-pad - The input pad 
+# ibus-input-pad - Input pad for IBus
 #
 # Copyright (c) 2010 Takao Fujiwara <takao.fujiwara1@gmail.com>
 # Copyright (c) 2010 Red Hat, Inc.

@@ -7,7 +7,7 @@
 	<version>@VERSION@</version>
 	<author>Takao Fujiwara &lt;takao.fujiwara1@gmail.com&gt;</author>
 	<license>GPL</license>
-	<homepage>http://code.google.com/p/ibus</homepage>
+	<homepage>http://code.google.com/p/input-pad</homepage>
 	<textdomain>@GETTEXT_PACKAGE@</textdomain>
 	<shared_type>1</shared_type>
 

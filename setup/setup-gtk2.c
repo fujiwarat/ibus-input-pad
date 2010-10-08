@@ -1,5 +1,5 @@
 /* vim:set et sts=4: */
-/* ibus-input-pad - The input pad for IBus
+/* ibus-input-pad - Input pad for IBus
  * Copyright (C) 2010 Takao Fujiwara <takao.fujiwara1@gmail.com>
  * Copyright (C) 2010 Red Hat, Inc.
  *

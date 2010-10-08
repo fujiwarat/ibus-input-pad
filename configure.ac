@@ -1,6 +1,6 @@
 # vim:set et ts=4:
 #
-# input-pad - The input pad 
+# ibus-input-pad - Input pad for IBus
 #
 # Copyright (c) 2010 Takao Fujiwara <takao.fujiwara1@gmail.com>
 # Copyright (c) 2010 Red Hat, Inc.
@@ -30,7 +30,7 @@ m4_define(ibus_maybe_datestamp,
 m4_define([ibus_version],
     ibus_major_version.ibus_minor_version.ibus_micro_version[]ibus_maybe_datestamp)
 
-AC_INIT([ibus-input-pad], [ibus_version], [http://code.google.com/p/ibus/issues/entry],[ibus-input-pad])
+AC_INIT([ibus-input-pad], [ibus_version], [http://code.google.com/p/input-pad/issues/entry],[ibus-input-pad])
 AM_INIT_AUTOMAKE([1.10])
 AC_GNU_SOURCE
 
