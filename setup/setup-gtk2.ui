@@ -231,9 +231,8 @@
                 <property name="visible">True</property>
                 <property name="orientation">vertical</property>
                 <property name="border_width">10</property>
-                <!--
-                <child></child>
-                -->
+                <property name="can_focus">True</property>
+                <property name="receives_default">False</property>
               </object>
               <packing>
                 <property name="position">1</property>
