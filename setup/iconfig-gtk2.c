@@ -141,7 +141,7 @@ ibus_input_pad_config_class_init (IBusInputPadConfigClass *klass)
 
 /* currently this is a static function due to ibus_bus_get_config */
 static IBusInputPadConfig *
-ibus_input_pad_config_new (IBusConnection *connection)
+ibus_input_pad_config_new (GDBusConnection *connection)
 {
     GObject *obj;
 
@@ -177,17 +177,17 @@ ibus_input_pad_config_get_int (IBusInputPadConfig      *config,
                                int                     *value_intp)
 {
     IBusConfig *ibus_config;
-    GValue value = {0, };
+    GVariant *value = NULL;
 
     g_return_val_if_fail (IBUS_IS_INPUT_PAD_CONFIG (config), FALSE);
     g_return_val_if_fail (config->priv != NULL, FALSE);
 
     ibus_config = config->priv->config;
-    if (ibus_config_get_value (ibus_config, section, name, &value)) {
+    if ((value = ibus_config_get_value (ibus_config, section, name)) != NULL) {
         if (value_intp) {
-            *value_intp = g_value_get_int (&value);
+            *value_intp = g_variant_get_int32 (value);
         }
-        g_value_unset (&value);
+        g_variant_unref (value);
         return TRUE;
     }
     if (!g_strcmp0 (name, "char_table_combo_box")) {
@@ -211,23 +211,17 @@ ibus_input_pad_config_get_str (IBusInputPadConfig      *config,
                                gchar                  **value_strp)
 {
     IBusConfig *ibus_config;
-    const gchar *s;
-    GValue value = {0, };
+    GVariant *value = NULL;
 
     g_return_val_if_fail (IBUS_IS_INPUT_PAD_CONFIG (config), FALSE);
     g_return_val_if_fail (config->priv != NULL, FALSE);
 
     ibus_config = config->priv->config;
-    if (ibus_config_get_value (ibus_config, section, name, &value)) {
+    if ((value = ibus_config_get_value (ibus_config, section, name)) != NULL) {
         if (value_strp) {
-            s = g_value_get_string (&value);
-            if (s) {
-                *value_strp = g_strdup (s);
-            } else {
-                *value_strp = NULL;
-            }
+            *value_strp = g_variant_dup_string (value, NULL);
         }
-        g_value_unset (&value);
+        g_variant_unref (value);
         return TRUE;
     }
     if (!g_strcmp0 (name, "keyboard_theme")) {
@@ -244,22 +238,19 @@ gboolean
 ibus_input_pad_config_get_value (IBusConfig    *config,
                                  const gchar   *section,
                                  const gchar   *name,
-                                 GValue        *value)
+                                 GVariant      *value)
 {
-    if (ibus_config_get_value (config, section, name, value)) {
+    if ((value = ibus_config_get_value (config, section, name)) != NULL) {
         return TRUE;
     }
     if (!g_strcmp0 (name, "keyboard_theme")) {
-        g_value_init (value, G_TYPE_STRING);
-        g_value_set_static_string (value, KEYBOARD_THEME_DEFAULT);
+        value = g_variant_new ("s", KEYBOARD_THEME_DEFAULT);
         return TRUE;
     } else if (!g_strcmp0 (name, "char_table_combo_box")) {
-        g_value_init (value, G_TYPE_INT);
-        g_value_set_int (value, CHAR_TABLE_COMBO_BOX_DEFAULT);
+        value = g_variant_new ("i", CHAR_TABLE_COMBO_BOX_DEFAULT);
         return TRUE;
     } else if (!g_strcmp0 (name, "layout_table_combo_box")) {
-        g_value_init (value, G_TYPE_INT);
-        g_value_set_int (value, LAYOUT_TABLE_COMBO_BOX_DEFAULT);
+        value = g_variant_new ("i", LAYOUT_TABLE_COMBO_BOX_DEFAULT);
         return TRUE;
     }
     return FALSE;
@@ -273,7 +264,7 @@ ibus_input_pad_config_set_int (IBusInputPadConfig      *config,
                                int                      value_int)
 {
     IBusConfig *ibus_config;
-    GValue value = {0, };
+    GVariant *value = NULL;
     int orig_i = 0;
     gchar *path;
     SavedTable *saved_table;
@@ -283,9 +274,9 @@ ibus_input_pad_config_set_int (IBusInputPadConfig      *config,
     g_return_val_if_fail (section != NULL && name != NULL, FALSE);
 
     ibus_config = config->priv->config;
-    if (ibus_config_get_value (ibus_config, section, name, &value)) {
-        orig_i = g_value_get_int (&value);
-        g_value_unset (&value);
+    if ((value = ibus_config_get_value (ibus_config, section, name)) != NULL) {
+        orig_i = g_variant_get_int32 (value);
+        g_variant_unref (value);
         if (value_int == orig_i) {
             return FALSE;
         }
@@ -325,7 +316,7 @@ ibus_input_pad_config_set_str (IBusInputPadConfig      *config,
                                const gchar             *value_str)
 {
     IBusConfig *ibus_config;
-    GValue value = {0, };
+    GVariant *value = NULL;
     const gchar *orig_str = NULL;
     gchar *path;
     SavedTable *saved_table;
@@ -335,13 +326,13 @@ ibus_input_pad_config_set_str (IBusInputPadConfig      *config,
     g_return_val_if_fail (section != NULL && name != NULL, FALSE);
 
     ibus_config = config->priv->config;
-    if (ibus_config_get_value (ibus_config, section, name, &value)) {
-        orig_str = g_value_get_string (&value);
+    if ((value = ibus_config_get_value (ibus_config, section, name)) != NULL) {
+        orig_str = g_variant_get_string (value, NULL);
         if (!g_strcmp0 (value_str, orig_str)) {
-            g_value_unset (&value);
+            g_variant_unref (value);
             return FALSE;
         }
-        g_value_unset (&value);
+        g_variant_unref (value);
     } else if (!g_strcmp0 (name, "keyboard_theme")) {
         if (value_str == NULL ||
             !g_strcmp0 (value_str, KEYBOARD_THEME_DEFAULT)) {
@@ -377,19 +368,18 @@ ibus_input_pad_config_commit_int (IBusInputPadConfig      *config,
                                   int                      value_int)
 {
     IBusConfig *ibus_config;
-    GValue value = {0, };
+    GVariant *value = NULL;
 
     g_return_val_if_fail (IBUS_IS_INPUT_PAD_CONFIG (config), FALSE);
     g_return_val_if_fail (config->priv != NULL, FALSE);
     g_return_val_if_fail (section != NULL && name != NULL, FALSE);
 
     ibus_config = config->priv->config;
-    g_value_init (&value, G_TYPE_INT);
-    g_value_set_int (&value, value_int);
-    if (!ibus_config_set_value (ibus_config, section, name, &value)) {
+    value = g_variant_new ("i", value_int);
+    if (!ibus_config_set_value (ibus_config, section, name, value)) {
         return FALSE;
     }
-    g_value_unset (&value);
+    g_variant_unref (value);
     return TRUE;
 }
 
@@ -400,19 +390,18 @@ ibus_input_pad_config_commit_str (IBusInputPadConfig      *config,
                                   const gchar             *value_str)
 {
     IBusConfig *ibus_config;
-    GValue value = {0, };
+    GVariant *value = NULL;
 
     g_return_val_if_fail (IBUS_IS_INPUT_PAD_CONFIG (config), FALSE);
     g_return_val_if_fail (config->priv != NULL, FALSE);
     g_return_val_if_fail (section != NULL && name != NULL, FALSE);
 
     ibus_config = config->priv->config;
-    g_value_init (&value, G_TYPE_STRING);
-    g_value_set_static_string (&value, value_str);
-    if (!ibus_config_set_value (ibus_config, section, name, &value)) {
+    value = g_variant_new ("s", value_str);
+    if (!ibus_config_set_value (ibus_config, section, name, value)) {
         return FALSE;
     }
-    g_value_unset (&value);
+    g_variant_unref (value);
     return TRUE;
 }
 
