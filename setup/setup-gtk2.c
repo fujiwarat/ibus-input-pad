@@ -379,7 +379,7 @@ table_add_kbdui_list (GtkWidget                *table,
                       InputPadWindowKbduiName  *list,
                       IBusInputPadConfig       *config)
 {
-    guint16 nrows, ncols;
+    guint nrows, ncols;
     GtkTreeModel *model;
     GtkWidget *label;
     GtkWidget *combobox;
@@ -387,8 +387,7 @@ table_add_kbdui_list (GtkWidget                *table,
 
     g_return_if_fail (GTK_IS_TABLE (table));
 
-    nrows = GTK_TABLE (table)->nrows;
-    ncols = GTK_TABLE(table)->ncols;
+    gtk_table_get_size (GTK_TABLE (table), &nrows, &ncols);
     g_return_if_fail (nrows > 0 && ncols >= 2);
 
     if ((model = keyboard_theme_new (list)) == NULL) {
@@ -465,16 +464,17 @@ create_about_vbox (GtkBuilder *builder)
     gtk_about_dialog_set_version (GTK_ABOUT_DIALOG (about_dialog), VERSION);
     content_area = gtk_dialog_get_content_area (GTK_DIALOG (about_dialog));
     list = gtk_container_get_children (GTK_CONTAINER (content_area));
-    g_return_if_fail (GTK_IS_VBOX (list->data));
+    g_return_if_fail (GTK_IS_BOX (list->data));
     vbox = GTK_WIDGET (list->data);
     list = gtk_container_get_children (GTK_CONTAINER (vbox));
 
     while (list) {
+        /* Copied the implementation of gtk_widget_reparent() 
+         * but gtk_box_pack_start() also includes set parent. */
         widget = GTK_WIDGET (list->data);
-        old_parent = widget->parent;
-        widget->parent = NULL;
-        gtk_widget_set_parent_window (widget, NULL);
-        g_signal_emit_by_name (widget, "parent-set", old_parent);
+        old_parent = gtk_widget_get_parent (widget);
+        g_object_ref (G_OBJECT (widget));
+        gtk_container_remove (GTK_CONTAINER (old_parent), widget);
         gtk_box_pack_start (GTK_BOX (about_vbox), widget,
                             FALSE, FALSE, 0);
         list = list->next;

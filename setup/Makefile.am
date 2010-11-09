@@ -64,7 +64,6 @@ ibus_setup_input_pad_SOURCES = \
 	$(NULL)
 
 ibus_setup_input_pad_CFLAGS = \
-	$(GTK2_CFLAGS)                                                  \
 	$(IBUS_CFLAGS)                                                  \
 	$(INPUT_PAD_CFLAGS)                                             \
 	$(NULL)
@@ -74,11 +73,17 @@ ibus_setup_input_pad_LDFLAGS = \
 
 ibus_setup_input_pad_LDADD = \
 	$(builddir)/libiconfig.la                                       \
-	$(GTK2_LIBS)                                                    \
 	$(IBUS_LIBS)                                                    \
 	$(INPUT_PAD_LIBS)                                               \
 	$(NULL)
 
+if HAVE_GTK3
+    ibus_setup_input_pad_CFLAGS += $(GTK3_CFLAGS)
+    ibus_setup_input_pad_LDADD += $(GTK3_LIBS)
+else
+    ibus_setup_input_pad_CFLAGS += $(GTK2_CFLAGS)
+    ibus_setup_input_pad_LDADD += $(GTK2_LIBS)
+endif
 
 EXTRA_DIST = \
 	setup-gtk2.ui                                                   \
