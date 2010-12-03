@@ -67,25 +67,32 @@ PKG_CHECK_MODULES(GLIB2, [
 ])
 
 dnl - check gtk
-AC_ARG_WITH(gtk-version,
-    AS_HELP_STRING([--with-gtk-version[=VERSION]],
-                   [Select GTK+ version. The default is 2]),,
-    with_gtk_version=2
+AC_ARG_WITH([gtk],
+    [AS_HELP_STRING([--with-gtk=2.0|3.0],
+                    [Select GTK+ version. The default is 2.0])],
+    [case "$with_gtk" in
+        2.0|3.0) ;;
+        *) AC_MSG_ERROR([invalid gtk version specified]) ;;
+     esac],
+    [with_gtk=2.0]
 )
 
-if test "x$with_gtk_version" = x3 ; then
-    PKG_CHECK_MODULES(GTK3, [
-        gtk+-3.0
-    ])
-    AM_CONDITIONAL(HAVE_GTK3, true)
-    AM_CONDITIONAL(HAVE_GTK2, false)
-else
-    PKG_CHECK_MODULES(GTK2, [
-        gtk+-2.0
-    ])
-    AM_CONDITIONAL(HAVE_GTK3, false)
-    AM_CONDITIONAL(HAVE_GTK2, true)
-fi
+case "$with_gtk" in
+    2.0)
+        PKG_CHECK_MODULES(GTK2, [
+            gtk+-2.0
+        ])
+        AM_CONDITIONAL(HAVE_GTK3, false)
+        AM_CONDITIONAL(HAVE_GTK2, true)
+        ;;
+    3.0)
+        PKG_CHECK_MODULES(GTK3, [
+            gtk+-3.0
+        ])
+        AM_CONDITIONAL(HAVE_GTK3, true)
+        AM_CONDITIONAL(HAVE_GTK2, false)
+        ;;
+esac
 
 m4_define([ibus_pc_name], [ibus-1.0])
 PKG_CHECK_MODULES(IBUS,
@@ -122,5 +129,5 @@ echo "
 
 
 libinput_pad version:    $libinput_pad_VERSION
-GTK+ version:            $with_gtk_version
+GTK+ version:            $with_gtk
 "
