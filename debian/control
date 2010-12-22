@@ -15,7 +15,7 @@ Build-Depends:
     libxklavier-dev (>= 4.0),
     libxml2-dev (>= 2.0),
     debhelper (>= 7.0.50)
-Standards-Version: 3.8.4
+Standards-Version: 3.9.1
 Homepage: http://code.google.com/p/input-pad/
 
 Package: ibus-input-pad
@@ -24,7 +24,7 @@ Depends:
     ${misc:Depends},
     ${shlibs:Depends},
     ibus,
-    libinput-pad0
+    libinput-pad1
 Description: Input Pad for IBus
  The input pad engine for IBus platform.
  It provides the interface to use input-pad with IBus.
