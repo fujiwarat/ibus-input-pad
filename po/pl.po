@@ -1,125 +1,129 @@
-# Source translations for ibus-input-pad
+# Polish translations for ibus-input-pad
 # Copyright (C) 2010-2012 Takao Fujiwara <takao.fujiwara1@gmail.com>
 # This file is distributed under the same license as the ibus-input-pad package.
 #
+# Translators:
+# Piotr Drąg <piotrdrag@gmail.com>, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: ibus-input-pad HEAD\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/input-pad/issues/entry\n"
 "POT-Creation-Date: 2012-12-17 19:34+0900\n"
-"PO-Revision-Date: 2011-03-08 11:40+0900\n"
-"Last-Translator: Takao Fujiwara <takao.fujiwara1@gmail.com>\n"
-"Language-Team: Source\n"
-"Language: en\n"
+"PO-Revision-Date: 2012-02-14 08:36+0000\n"
+"Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
+"Language-Team: Polish\n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
 
 #: ../engine/engine.c:158 ../engine/engine.c:159 ../engine/engine.c:168
 #: ../engine/engine.c:169
 msgid "Launch Input Pad"
-msgstr ""
+msgstr "Uruchom tablicę wprowadzania"
 
 #: ../engine/engine.c:180 ../engine/engine.c:181 ../engine/engine.c:361
 msgid "Show Input Pad"
-msgstr ""
+msgstr "Wyświetl tablicę wprowadzania"
 
 #: ../engine/engine.c:190 ../engine/engine.c:191
 msgid "Show Input Pad (Keyboard Only)"
-msgstr ""
+msgstr "tablicę wprowadzania (tylko klawiaturę)"
 
 #: ../engine/engine.c:203
 msgid "Setup Input Pad"
-msgstr ""
+msgstr "Ustaw tablicę wprowadzania"
 
 #: ../engine/engine.c:204
 msgid "Configure Input Pad"
-msgstr ""
+msgstr "Skonfiguruj tablicę wprowadzania"
 
 #: ../engine/engine.c:359
 msgid "Hide Input Pad"
-msgstr ""
+msgstr "Ukryj tablicę wprowadzania"
 
 #: ../engine/main.c:55 ../engine/main.c:64 ../engine/main.c:65
 msgid "Input Pad"
-msgstr ""
+msgstr "Tablica wprowadzania"
 
 #: ../setup/setup-gtk2.c:360 ../setup/setup-gtk2.ui.h:4
 msgid "Default"
-msgstr ""
+msgstr "Domyślne"
 
 #: ../setup/setup-gtk2.c:397
 msgid "Keyboard _Theme:"
-msgstr ""
+msgstr "_Motyw klawiatury:"
 
 #: ../setup/setup-gtk2.c:400
 msgid "Which theme you choose in kbdui modules"
-msgstr ""
+msgstr "Jakie motyw wybrać w modułach kbdui"
 
 #: ../setup/setup-gtk2.ui.h:1
 msgid "Nothing"
-msgstr ""
+msgstr "Nic"
 
 #: ../setup/setup-gtk2.ui.h:2
 msgid "Custom"
-msgstr ""
+msgstr "Własne"
 
 #: ../setup/setup-gtk2.ui.h:3
 msgid "All"
-msgstr ""
+msgstr "Wszystko"
 
 #: ../setup/setup-gtk2.ui.h:5
 msgid "IBus-Input-Pad Setup"
-msgstr ""
+msgstr "Ustawienia tablicy wprowadzania iBus"
 
 #: ../setup/setup-gtk2.ui.h:6
 msgid "_Character Table Type:"
-msgstr ""
+msgstr "Typ tablicy _znaków:"
 
 #: ../setup/setup-gtk2.ui.h:7
 msgid "Whether you show the character table or not"
-msgstr ""
+msgstr "Określa, czy wyświetlać tablicę znaków"
 
 #: ../setup/setup-gtk2.ui.h:8
 msgid "_Keyboard Layout Type:"
-msgstr ""
+msgstr "Typ układu _klawiatury:"
 
 #: ../setup/setup-gtk2.ui.h:9
 msgid "Whether you show the keyboard layout or not"
-msgstr ""
+msgstr "Określa, czy wyświetlać układ klawiatury"
 
 #: ../setup/setup-gtk2.ui.h:10
 msgid "<b>Default Appearance</b>"
-msgstr ""
+msgstr "<b>Domyślny wygląd</b>"
 
 #: ../setup/setup-gtk2.ui.h:11
 msgid "<b>Keyboard Only Appearance</b>"
-msgstr ""
+msgstr "<b>Tylko wygląd klawiatury</b>"
 
 #: ../setup/setup-gtk2.ui.h:12
 msgid "General"
-msgstr ""
+msgstr "Ogólne"
 
 #: ../setup/setup-gtk2.ui.h:13
 msgid "About"
-msgstr ""
+msgstr "O programie"
 
 #: ../setup/setup-gtk2.ui.h:14
 msgid "Confirm"
-msgstr ""
+msgstr "Potwierdź"
 
 #: ../setup/setup-gtk2.ui.h:15
 msgid "Are you sure to close Setup?"
-msgstr ""
+msgstr "Na pewno zamknąć ustawienia?"
 
 #: ../setup/setup-gtk2.ui.h:16
 msgid "Are you sure to close Setup without saving configure?"
-msgstr ""
+msgstr "Na pewno zamknąć ustawienia bez zapisania konfiguracji?"
 
 #: ../setup/setup-gtk2.ui.h:17
 msgid "The input pad engine for IBus platform"
-msgstr ""
+msgstr "Mechanizm tablicy wprowadzania dla platformy iBus"
 
 #: ../setup/setup-gtk2.ui.h:18
 msgid "translator_credits"
-msgstr ""
+msgstr "Piotr Drąg <piotrdrag@gmail.com>, 2011"

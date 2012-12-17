@@ -1,56 +1,59 @@
-# Source translations for ibus-input-pad
+# Telugu translations for ibus-input-pad
 # Copyright (C) 2010-2012 Takao Fujiwara <takao.fujiwara1@gmail.com>
 # This file is distributed under the same license as the ibus-input-pad package.
 #
+# Translators:
+# ప్రవీణ్ యిళ్ళ <mail2ipn@gmail.com>, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: ibus-input-pad HEAD\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/input-pad/issues/entry\n"
 "POT-Creation-Date: 2012-12-17 19:34+0900\n"
-"PO-Revision-Date: 2011-03-08 11:40+0900\n"
-"Last-Translator: Takao Fujiwara <takao.fujiwara1@gmail.com>\n"
-"Language-Team: Source\n"
-"Language: en\n"
+"PO-Revision-Date: 2012-02-14 08:36+0000\n"
+"Last-Translator: ప్రవీణ్ ఇళ్ళ <mail2ipn@gmail.com>\n"
+"Language-Team: Telugu\n"
+"Language: te\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../engine/engine.c:158 ../engine/engine.c:159 ../engine/engine.c:168
 #: ../engine/engine.c:169
 msgid "Launch Input Pad"
-msgstr ""
+msgstr "ఇన్‌పుట్ ప్యాడ్ ప్రారంభించు"
 
 #: ../engine/engine.c:180 ../engine/engine.c:181 ../engine/engine.c:361
 msgid "Show Input Pad"
-msgstr ""
+msgstr "ఇన్‌పుట్ ప్యాడ్ చూపించు"
 
 #: ../engine/engine.c:190 ../engine/engine.c:191
 msgid "Show Input Pad (Keyboard Only)"
-msgstr ""
+msgstr "ఇన్‌పుట్ ప్యాడ్ చూపించు(కీబోర్డు మాత్రమే)"
 
 #: ../engine/engine.c:203
 msgid "Setup Input Pad"
-msgstr ""
+msgstr "ఇన్‌పుట్ ప్యాడ్ అమర్చు"
 
 #: ../engine/engine.c:204
 msgid "Configure Input Pad"
-msgstr ""
+msgstr "ఇన్‌పుట్ ప్యాడ్ స్వరూపించు"
 
 #: ../engine/engine.c:359
 msgid "Hide Input Pad"
-msgstr ""
+msgstr "ఇన్‌పుట్ ప్యాడ్‌ను దాయి"
 
 #: ../engine/main.c:55 ../engine/main.c:64 ../engine/main.c:65
 msgid "Input Pad"
-msgstr ""
+msgstr "ఇన్‌పుట్ ప్యాడ్"
 
 #: ../setup/setup-gtk2.c:360 ../setup/setup-gtk2.ui.h:4
 msgid "Default"
-msgstr ""
+msgstr "అప్రమేయం"
 
 #: ../setup/setup-gtk2.c:397
 msgid "Keyboard _Theme:"
-msgstr ""
+msgstr "కీబోర్డు థీమ్(_T):"
 
 #: ../setup/setup-gtk2.c:400
 msgid "Which theme you choose in kbdui modules"
@@ -62,11 +65,11 @@ msgstr ""
 
 #: ../setup/setup-gtk2.ui.h:2
 msgid "Custom"
-msgstr ""
+msgstr "అనురూపిత"
 
 #: ../setup/setup-gtk2.ui.h:3
 msgid "All"
-msgstr ""
+msgstr "అన్ని"
 
 #: ../setup/setup-gtk2.ui.h:5
 msgid "IBus-Input-Pad Setup"
@@ -82,7 +85,7 @@ msgstr ""
 
 #: ../setup/setup-gtk2.ui.h:8
 msgid "_Keyboard Layout Type:"
-msgstr ""
+msgstr "కీబోర్డు నమూనా రకం(_K):"
 
 #: ../setup/setup-gtk2.ui.h:9
 msgid "Whether you show the keyboard layout or not"
@@ -90,27 +93,27 @@ msgstr ""
 
 #: ../setup/setup-gtk2.ui.h:10
 msgid "<b>Default Appearance</b>"
-msgstr ""
+msgstr "<b>అప్రమేయ స్వరూపం</b>"
 
 #: ../setup/setup-gtk2.ui.h:11
 msgid "<b>Keyboard Only Appearance</b>"
-msgstr ""
+msgstr "<b>కీబోర్డు స్వరూపం</b>"
 
 #: ../setup/setup-gtk2.ui.h:12
 msgid "General"
-msgstr ""
+msgstr "సాధారణం"
 
 #: ../setup/setup-gtk2.ui.h:13
 msgid "About"
-msgstr ""
+msgstr "గురించి"
 
 #: ../setup/setup-gtk2.ui.h:14
 msgid "Confirm"
-msgstr ""
+msgstr "నిర్ధారించు"
 
 #: ../setup/setup-gtk2.ui.h:15
 msgid "Are you sure to close Setup?"
-msgstr ""
+msgstr "అమరికను ఖచ్చితముగా మూసివేయాలనుకుంటున్నారా?"
 
 #: ../setup/setup-gtk2.ui.h:16
 msgid "Are you sure to close Setup without saving configure?"
@@ -122,4 +125,4 @@ msgstr ""
 
 #: ../setup/setup-gtk2.ui.h:18
 msgid "translator_credits"
-msgstr ""
+msgstr "Praveen Illa <mail2ipn@gmail.com>, 2011"
