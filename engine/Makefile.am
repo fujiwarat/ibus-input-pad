@@ -22,7 +22,7 @@
 noinst_DIST = \
 	$(NULL)
 
-INCLUDES = \
+AM_CPPFLAGS = \
 	-I$(top_srcdir)                                                    \
 	-I$(top_srcdir)/setup                                              \
 	-DDATAROOTDIR=\""$(datarootdir)"\"                                 \

@@ -25,7 +25,7 @@ noinst_DIST = \
 setupdir=$(pkgdatadir)/setup
 setup_DATA=setup-gtk2.ui
 
-INCLUDES = \
+AM_CPPFLAGS = \
 	-I$(top_srcdir)                                                 \
 	-I$(top_srcdir)/engine                                          \
 	-DDATAROOTDIR=\""$(datarootdir)"\"                              \
@@ -85,9 +85,26 @@ else
     ibus_setup_input_pad_LDADD += $(GTK2_LIBS)
 endif
 
+desktop_in_in_files = ibus-setup-input-pad.desktop.in.in
+desktop_in_files = $(desktop_in_in_files:.in.in=.in)
+
+$(desktop_in_files): %.desktop.in: %.desktop.in.in Makefile
+	$(AM_V_GEN) sed \
+	    -e "s|\@libexecdir\@|$(libexecdir)|" \
+	    -e "s|\@datadir\@|$(datadir)|" \
+	    $< > $@.tmp && mv $@.tmp $@
+
+desktopdir=$(datadir)/applications
+desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
+
+@INTLTOOL_DESKTOP_RULE@
+
 EXTRA_DIST = \
+	$(desktop_in_in_files)                                          \
 	setup-gtk2.ui                                                   \
 	$(NULL)
 
 CLEANFILES = \
+	$(desktop_DATA)                                                 \
+	$(desktop_in_files)                                             \
 	$(NULL)
