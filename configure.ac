@@ -2,8 +2,8 @@
 #
 # ibus-input-pad - Input pad for IBus
 #
-# Copyright (c) 2010-2011 Takao Fujiwara <takao.fujiwara1@gmail.com>
-# Copyright (c) 2010-2011 Red Hat, Inc.
+# Copyright (c) 2010-2013 Takao Fujiwara <takao.fujiwara1@gmail.com>
+# Copyright (c) 2010-2013 Red Hat, Inc.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -44,14 +44,13 @@ AC_MSG_NOTICE([$PACKAGE sub version $libinput_pad_VERSION])
 
 dnl - define PACKAGE_VERSION_* variables
 AM_SANITY_CHECK
-AM_MAINTAINER_MODE
-AM_DISABLE_STATIC
+AM_MAINTAINER_MODE(enable)
+AC_DISABLE_STATIC
 AC_PROG_CC
 AM_PROG_CC_C_O
 AC_PROG_CXX
-AC_ISC_POSIX
 AC_HEADER_STDC
-AM_PROG_LIBTOOL
+AC_PROG_LIBTOOL
 IT_PROG_INTLTOOL([0.35.0])
 
 dnl - For dislpay Date
