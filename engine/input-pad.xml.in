@@ -17,7 +17,7 @@
 			<license>GPL</license>
 			<author>Takao Fujiwara &lt;takao.fujiwara1@gmail.com&gt;</author>
 			<icon>@datarootdir@/pixmaps/input-pad.png</icon>
-			<layout>us</layout>
+			@LAYOUT_XML@
 			<longname>Input Pad</longname>
 			<description>Input Pad</description>
 			<rank>0</rank>

@@ -2,8 +2,8 @@
 #
 # ibus-input-pad - Input pad for IBus
 #
-# Copyright (c) 2010-2013 Takao Fujiwara <takao.fujiwara1@gmail.com>
-# Copyright (c) 2010-2013 Red Hat, Inc.
+# Copyright (c) 2010-2014 Takao Fujiwara <takao.fujiwara1@gmail.com>
+# Copyright (c) 2010-2014 Red Hat, Inc.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -77,6 +77,19 @@ PKG_CHECK_MODULES(INPUT_PAD, [
     input-pad
 ])
 
+dnl - set ibus-input-pad layout
+AC_ARG_WITH(layout,
+           [AC_HELP_STRING([--with-layout=LAYOUT],
+                           [Define the layout. the default is 'default'.
+                            You could set 'us'.])],
+           [LAYOUT="$withval"],
+           [LAYOUT="default"])
+if test x"$LAYOUT" = x; then
+    LAYOUT="default"
+fi
+LAYOUT_XML="<layout>${LAYOUT}</layout>"
+AC_SUBST(LAYOUT_XML)
+
 dnl - define GETTEXT_* variables
 GETTEXT_PACKAGE=ibus-input-pad
 AC_SUBST(GETTEXT_PACKAGE)
@@ -99,4 +112,5 @@ echo "
 
 
 libinput_pad version:    $libinput_pad_VERSION
+engine layout:           $LAYOUT
 "
