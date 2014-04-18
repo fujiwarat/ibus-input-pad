@@ -60,46 +60,17 @@ DATE_DISPLAY="ibus_datedisplay"
 AC_SUBST(DATE_DISPLAY)
 
 dnl - pkgconfig
-AM_PATH_GLIB_2_0
+AM_PATH_GLIB_2_0(2.37.0)
 PKG_CHECK_MODULES(GLIB2, [
-    glib-2.0 >= 2.8
+    glib-2.0 >= 2.37
 ])
 
-dnl - check gtk
-AC_ARG_WITH([gtk],
-    [AS_HELP_STRING([--with-gtk=2.0|3.0],
-                    [Select GTK+ version. The default is 3.0])],
-    [case "$with_gtk" in
-        2.0|3.0) ;;
-        *) AC_MSG_ERROR([invalid gtk version specified]) ;;
-     esac],
-    [with_gtk=3.0]
-)
+PKG_CHECK_MODULES(GTK3, [
+    gtk+-3.0 >= 3.10
+])
 
-case "$with_gtk" in
-    2.0)
-        PKG_CHECK_MODULES(GTK2, [
-            gtk+-2.0
-        ])
-        AM_CONDITIONAL(HAVE_GTK3, false)
-        AM_CONDITIONAL(HAVE_GTK2, true)
-        ;;
-    3.0)
-        PKG_CHECK_MODULES(GTK3, [
-            gtk+-3.0
-        ])
-        AM_CONDITIONAL(HAVE_GTK3, true)
-        AM_CONDITIONAL(HAVE_GTK2, false)
-        ;;
-esac
-
-m4_define([ibus_pc_name], [ibus-1.0])
 PKG_CHECK_MODULES(IBUS,
-   [ibus_pc_name >= 1.2.0.20100111],
-   [AC_MSG_NOTICE([IBUS version is ok])],
-   [PKG_CHECK_MODULES(IBUS, ibus_pc_name)
-    AC_MSG_NOTICE([IBUS version is old])
-    AC_DEFINE(IBUS_DEPRECATED_LANGUAGE_MENU_ITEM, 1, [Define if old ibus])]
+    ibus-1.0 >= 1.2.0.20100111,
 )
 
 PKG_CHECK_MODULES(INPUT_PAD, [
@@ -128,5 +99,4 @@ echo "
 
 
 libinput_pad version:    $libinput_pad_VERSION
-GTK+ version:            $with_gtk
 "

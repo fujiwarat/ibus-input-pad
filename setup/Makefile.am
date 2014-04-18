@@ -2,8 +2,8 @@
 #
 # ibus-input-pad - Input pad for IBus
 #
-# Copyright (c) 2010-2011 Takao Fujiwara <takao.fujiwara1@gmail.com>
-# Copyright (c) 2010-2011 Red Hat, Inc.
+# Copyright (c) 2010-2014 Takao Fujiwara <takao.fujiwara1@gmail.com>
+# Copyright (c) 2010-2014 Red Hat, Inc.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,14 +22,10 @@
 noinst_DIST = \
 	$(NULL)
 
-setupdir=$(pkgdatadir)/setup
-setup_DATA=setup-gtk.ui
-
 AM_CPPFLAGS = \
 	-I$(top_srcdir)                                                 \
 	-I$(top_srcdir)/engine                                          \
 	-DDATAROOTDIR=\""$(datarootdir)"\"                              \
-	-DIBUS_INPUT_PAD_SETUP_UI_FILE=\""$(setupdir)/$(setup_DATA)"\"  \
 	$(NULL)
 
 noinst_LTLIBRARIES = \
@@ -61,9 +57,11 @@ ibus_setup_input_pad_SOURCES = \
 	main.c                                                          \
 	setup-gtk.c                                                     \
 	setup-gtk.h                                                     \
+	resources.c                                                     \
 	$(NULL)
 
 ibus_setup_input_pad_CFLAGS = \
+	$(GTK3_CFLAGS)                                                  \
 	$(IBUS_CFLAGS)                                                  \
 	$(INPUT_PAD_CFLAGS)                                             \
 	$(NULL)
@@ -73,17 +71,13 @@ ibus_setup_input_pad_LDFLAGS = \
 
 ibus_setup_input_pad_LDADD = \
 	$(builddir)/libiconfig.la                                       \
+	$(GTK3_LIBS)                                                    \
 	$(IBUS_LIBS)                                                    \
 	$(INPUT_PAD_LIBS)                                               \
 	$(NULL)
 
-if HAVE_GTK3
-    ibus_setup_input_pad_CFLAGS += $(GTK3_CFLAGS)
-    ibus_setup_input_pad_LDADD += $(GTK3_LIBS)
-else
-    ibus_setup_input_pad_CFLAGS += $(GTK2_CFLAGS)
-    ibus_setup_input_pad_LDADD += $(GTK2_LIBS)
-endif
+resources.c: ibus-setup-input-pad.gresource.xml
+	$(GLIB_COMPILE_RESOURCES) $< --target=$@ --generate-source
 
 desktop_in_in_files = ibus-setup-input-pad.desktop.in.in
 desktop_in_files = $(desktop_in_in_files:.in.in=.in)
@@ -99,8 +93,11 @@ desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 
 @INTLTOOL_DESKTOP_RULE@
 
+MAINTAINERCLEANFILES = resources.c
+
 EXTRA_DIST = \
 	$(desktop_in_in_files)                                          \
+	ibus-setup-input-pad.gresource.xml                              \
 	setup-gtk.ui                                                    \
 	$(NULL)
 

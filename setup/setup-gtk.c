@@ -1,7 +1,7 @@
 /* vim:set et sts=4: */
 /* ibus-input-pad - Input pad for IBus
- * Copyright (C) 2010-2011 Takao Fujiwara <takao.fujiwara1@gmail.com>
- * Copyright (C) 2010-2011 Red Hat, Inc.
+ * Copyright (C) 2010-2014 Takao Fujiwara <takao.fujiwara1@gmail.com>
+ * Copyright (C) 2010-2014 Red Hat, Inc.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -377,18 +377,15 @@ keyboard_theme_new (InputPadWindowKbduiName *list)
 static void
 table_add_kbdui_list (GtkWidget                *table,
                       InputPadWindowKbduiName  *list,
-                      IBusInputPadConfig       *config)
+                      IBusInputPadConfig       *config,
+                      int                       nrows)
 {
-    guint nrows, ncols;
     GtkTreeModel *model;
     GtkWidget *label;
     GtkWidget *combobox;
     GtkCellRenderer *renderer;
 
-    g_return_if_fail (GTK_IS_TABLE (table));
-
-    gtk_table_get_size (GTK_TABLE (table), &nrows, &ncols);
-    g_return_if_fail (nrows > 0 && ncols >= 2);
+    g_return_if_fail (GTK_IS_GRID (table));
 
     if ((model = keyboard_theme_new (list)) == NULL) {
         return;
@@ -398,10 +395,7 @@ table_add_kbdui_list (GtkWidget                *table,
     gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
     gtk_widget_set_tooltip_text (label,
                                  _("Which theme you choose in kbdui modules"));
-    gtk_table_attach_defaults (GTK_TABLE (table),
-                               label,
-                               0, 1,
-                               nrows - 1, nrows);
+    gtk_grid_attach (GTK_GRID (table), label, 0, nrows -1, 1, 1);
     gtk_widget_show (label);
 
     combobox = gtk_combo_box_new ();
@@ -419,10 +413,7 @@ table_add_kbdui_list (GtkWidget                *table,
                                     "visible", THEME_VISIBLE_COL,
                                     NULL);
 
-    gtk_table_attach_defaults (GTK_TABLE (table),
-                               combobox,
-                               1, 2,
-                               nrows - 1, nrows);
+    gtk_grid_attach (GTK_GRID (table), combobox, 1, nrows -1, 1, 1);
     set_combobox_appearance_default_value (combobox, config);
 
     gtk_widget_show (combobox);
@@ -444,6 +435,26 @@ destroy_kbdui_list (InputPadWindowKbduiName *list)
     g_free (list);
 }
 
+/* If 'logo-icon-name' property is used,
+ * gtk_about_dialog_set_logo_icon_name() is called and it fails to
+ * calculate the best size for a  pixmaps file.
+ * So we call gtk_about_dialog_set_logo() here.
+ */
+static void
+set_about_dialog_logo (GtkWidget *widget)
+{
+    GtkAboutDialog *dialog = GTK_ABOUT_DIALOG (widget);
+    GtkIconTheme *theme = gtk_icon_theme_get_default ();
+    GError *error = NULL;
+    GdkPixbuf *pixbuf = gtk_icon_theme_load_icon (theme,
+                                                  "input-pad",
+                                                  48,
+                                                  0,
+                                                  &error);
+    gtk_about_dialog_set_logo (dialog, pixbuf);
+    g_object_unref (pixbuf);
+}
+
 static void
 create_about_vbox (GtkBuilder *builder)
 {
@@ -459,9 +470,10 @@ create_about_vbox (GtkBuilder *builder)
     about_vbox = GTK_WIDGET (gtk_builder_get_object (builder, "about_vbox"));
 
     g_return_if_fail (GTK_IS_DIALOG (about_dialog));
-    g_return_if_fail (GTK_IS_VBOX (about_vbox));
+    g_return_if_fail (GTK_IS_BOX (about_vbox));
 
     gtk_about_dialog_set_version (GTK_ABOUT_DIALOG (about_dialog), VERSION);
+    set_about_dialog_logo (about_dialog);
     content_area = gtk_dialog_get_content_area (GTK_DIALOG (about_dialog));
     list = gtk_container_get_children (GTK_CONTAINER (content_area));
     g_return_if_fail (GTK_IS_BOX (list->data));
@@ -482,11 +494,10 @@ create_about_vbox (GtkBuilder *builder)
 }
 
 GtkWidget *
-ibus_input_pad_setup_gtk2_dialog_new (IBusInputPadConfig *config)
+ibus_input_pad_setup_gtk_dialog_new (IBusInputPadConfig *config)
 {
-    const gchar *filename = IBUS_INPUT_PAD_SETUP_UI_FILE;
     GError *error = NULL;
-    GtkBuilder *builder = gtk_builder_new ();
+    GtkBuilder *builder;
     GtkWidget *dialog = NULL;
     GtkWidget *char_table_combobox;
     GtkWidget *layout_table_combobox;
@@ -502,20 +513,9 @@ ibus_input_pad_setup_gtk2_dialog_new (IBusInputPadConfig *config)
     static ButtonClickData button_data_ok;
     static ButtonClickData button_data_cancel;
 
-    if (!filename ||
-        !g_file_test (filename, G_FILE_TEST_EXISTS)) {
-        g_error ("File Not Found: %s\n", filename ? filename : "(null)");
-        return NULL;
-    }
-
+    builder = gtk_builder_new_from_resource (
+            "/com/github/fujiwarat/ibus-input-pad/setup-gtk.ui");
     gtk_builder_set_translation_domain (builder, GETTEXT_PACKAGE);
-    gtk_builder_add_from_file (builder, filename, &error);
-    if (error) {
-        g_error ("ERROR: %s\n",
-                 error ? error->message ? error->message : "" : "");
-        g_error_free (error);
-        return NULL;
-    }
 
     dialog = GTK_WIDGET (gtk_builder_get_object (builder, "setup_dialog"));
     gtk_window_set_icon_from_file (GTK_WINDOW (dialog),
@@ -557,13 +557,8 @@ ibus_input_pad_setup_gtk2_dialog_new (IBusInputPadConfig *config)
     if (list == NULL) {
         gtk_widget_hide (keyboard_frame);
     } else {
-#ifdef IBUS_DEPRECATED_LANGUAGE_MENU_ITEM
-        gtk_widget_hide (keyboard_frame);
-        table_add_kbdui_list (default_table, list, config);
-#else
-        table_add_kbdui_list (default_table, list, config);
-        table_add_kbdui_list (keyboard_table, list, config);
-#endif
+        table_add_kbdui_list (default_table, list, config, 3);
+        table_add_kbdui_list (keyboard_table, list, config, 1);
         destroy_kbdui_list (list);
     }
 
@@ -595,13 +590,13 @@ ibus_input_pad_setup_gtk2_dialog_new (IBusInputPadConfig *config)
 }
 
 void
-ibus_input_pad_setup_gtk2_init (int *argc, char ***argv)
+ibus_input_pad_setup_gtk_init (int *argc, char ***argv)
 {
     gtk_init (argc, argv);
 }
 
 gboolean
-ibus_input_pad_setup_gtk2_dialog_run (GtkWidget *dialog)
+ibus_input_pad_setup_gtk_dialog_run (GtkWidget *dialog)
 {
     if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK) {
         return TRUE;
@@ -610,7 +605,7 @@ ibus_input_pad_setup_gtk2_dialog_run (GtkWidget *dialog)
 }
 
 void
-ibus_input_pad_setup_gtk2_dialog_destroy (GtkWidget *dialog)
+ibus_input_pad_setup_gtk_dialog_destroy (GtkWidget *dialog)
 {
     gtk_widget_destroy (dialog);
 }

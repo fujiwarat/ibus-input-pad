@@ -379,7 +379,6 @@ ibus_input_pad_config_commit_int (IBusInputPadConfig      *config,
     if (!ibus_config_set_value (ibus_config, section, name, value)) {
         return FALSE;
     }
-    g_variant_unref (value);
     return TRUE;
 }
 
@@ -401,7 +400,6 @@ ibus_input_pad_config_commit_str (IBusInputPadConfig      *config,
     if (!ibus_config_set_value (ibus_config, section, name, value)) {
         return FALSE;
     }
-    g_variant_unref (value);
     return TRUE;
 }
 

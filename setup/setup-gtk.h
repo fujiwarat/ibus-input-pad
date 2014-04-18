@@ -26,9 +26,9 @@
 
 #include "iconfig-gtk.h"
 
-void            ibus_input_pad_setup_gtk2_init (int *argc, char ***argv);
-GtkWidget *     ibus_input_pad_setup_gtk2_dialog_new (IBusInputPadConfig *config);
-gboolean        ibus_input_pad_setup_gtk2_dialog_run (GtkWidget *dialog);
-void            ibus_input_pad_setup_gtk2_dialog_destroy (GtkWidget *dialog);
+void            ibus_input_pad_setup_gtk_init (int *argc, char ***argv);
+GtkWidget *     ibus_input_pad_setup_gtk_dialog_new (IBusInputPadConfig *config);
+gboolean        ibus_input_pad_setup_gtk_dialog_run (GtkWidget *dialog);
+void            ibus_input_pad_setup_gtk_dialog_destroy (GtkWidget *dialog);
 
 #endif

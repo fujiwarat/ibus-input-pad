@@ -1,5 +1,5 @@
 <?xml version="1.0" standalone="no"?> <!--*- mode: xml -*-->
-<interface>
+<interface domain="ibus-input-pad">
   <object class="GtkListStore" id="char_table_model">
     <columns>
       <column type="guint"/>
@@ -42,15 +42,16 @@
     <property name="title" translatable="yes">IBus-Input-Pad Setup</property>
     <property name="accept-focus">False</property>
     <child internal-child="vbox">
-      <object class="GtkVBox" id="vbox1">
+      <object class="GtkBox" id="vbox1">
         <property name="visible">True</property>
+        <property name="orientation">vertical</property>
         <property name="border-width">10</property>
         <property name="spacing">12</property>
         <child>
           <object class="GtkNotebook" id="notebook1">
             <property name="visible">True</property>
             <child>
-              <object class="GtkVBox" id="vbox2">
+              <object class="GtkBox" id="vbox2">
                 <property name="visible">True</property>
                 <property name="orientation">vertical</property>
                 <property name="spacing">12</property>
@@ -66,13 +67,12 @@
                         <property name="left_padding">12</property>
                         <property name="right_padding">12</property>
                         <child>
-                          <object class="GtkVBox" id="default_vbox">
+                          <object class="GtkBox" id="default_vbox">
                             <property name="visible">True</property>
+                            <property name="orientation">vertical</property>
                             <child>
-                              <object class="GtkTable" id="default_table">
+                              <object class="GtkGrid" id="default_table">
                                 <property name="visible">True</property>
-                                <property name="n_rows">3</property>
-                                <property name="n_columns">2</property>
                                 <property name="column_spacing">12</property>
                                 <property name="row_spacing">6</property>
                                 <child>
@@ -84,9 +84,6 @@
                                     <property name="justify">right</property>
                                     <property name="xalign">0</property>
                                   </object> 
-                                  <packing>
-                                    <property name="x_options">GTK_FILL</property>
-                                  </packing> 
                                 </child>
                                 <child>
                                   <object class="GtkComboBox" id="char_table_combo_box">
@@ -103,7 +100,6 @@
                                   </object>
                                   <packing>
                                     <property name="left_attach">1</property>
-                                    <property name="right_attach">2</property>
                                   </packing> 
                                 </child>
                                 <child>
@@ -116,9 +112,8 @@
                                     <property name="xalign">0</property>
                                   </object> 
                                   <packing>
-                                    <property name="x_options">GTK_FILL</property>
+                                    <property name="left_attach">0</property>
                                     <property name="top_attach">1</property>
-                                    <property name="bottom_attach">2</property>
                                   </packing> 
                                 </child>
                                 <child>
@@ -136,9 +131,7 @@
                                   </object>
                                   <packing>
                                     <property name="left_attach">1</property>
-                                    <property name="right_attach">2</property>
                                     <property name="top_attach">1</property>
-                                    <property name="bottom_attach">2</property>
                                   </packing> 
                                 </child>
                                 <!-- The kbdui extension is checked on runtime.
@@ -183,13 +176,12 @@
                         <property name="left_padding">12</property>
                         <property name="right_padding">12</property>
                         <child>
-                          <object class="GtkVBox" id="keyboard_only_vbox">
+                          <object class="GtkBox" id="keyboard_only_vbox">
                             <property name="visible">True</property>
+                            <property name="orientation">vertical</property>
                             <child>
-                              <object class="GtkTable" id="keyboard_only_table">
+                              <object class="GtkGrid" id="keyboard_only_table">
                                 <property name="visible">True</property>
-                                <property name="n_rows">1</property>
-                                <property name="n_columns">2</property>
                                 <property name="column_spacing">12</property>
                                 <property name="row_spacing">6</property>
                                 <!-- The kbdui extension is checked on runtime.
@@ -227,7 +219,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkVBox" id="about_vbox">
+              <object class="GtkBox" id="about_vbox">
                 <property name="visible">True</property>
                 <property name="orientation">vertical</property>
                 <property name="border_width">10</property>
@@ -256,15 +248,16 @@
           </packing>
         </child>
         <child internal-child="action_area">
-          <object class="GtkHButtonBox" id="hbuttonbox1">
+          <object class="GtkButtonBox" id="hbuttonbox1">
             <property name="visible">True</property>
+            <property name="orientation">horizontal</property>
             <property name="homogeneous">True</property>
             <property name="layout_style">end</property>
             <child>
               <object class="GtkButton" id="button_apply">
-                <property name="label">gtk-apply</property>
+                <property name="label" translatable="yes">_Apply</property>
                 <property name="visible">True</property>
-                <property name="use_stock">True</property>
+                <property name="use_underline">True</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -274,9 +267,9 @@
             </child>
             <child>
               <object class="GtkButton" id="button_cancel">
-                <property name="label">gtk-cancel</property>
+                <property name="label" translatable="yes">_Cancel</property>
                 <property name="visible">True</property>
-                <property name="use_stock">True</property>
+                <property name="use_underline">True</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -286,9 +279,9 @@
             </child>
             <child>
               <object class="GtkButton" id="button_ok">
-                <property name="label">gtk-ok</property>
+                <property name="label" translatable="yes">_OK</property>
                 <property name="visible">True</property>
-                <property name="use_stock">True</property>
+                <property name="use_underline">True</property>
                 <property name="receives_default">True</property>
               </object>
               <packing>
@@ -321,12 +314,14 @@
     <property name="text" translatable="yes">Confirm</property>
     <property name="secondary_text" translatable="yes">Are you sure to close Setup?</property>
     <child internal-child="vbox">
-      <object class="GtkVBox" id="vbox50">
+      <object class="GtkBox" id="vbox50">
         <property name="visible">True</property>
+        <property name="orientation">vertical</property>
         <property name="spacing">2</property>
         <child internal-child="action_area">
-          <object class="GtkHButtonBox" id="hbuttonbox50">
+          <object class="GtkButtonBox" id="hbuttonbox50">
             <property name="visible">True</property>
+            <property name="orientation">horizontal</property>
             <property name="layout_style">end</property>
           </object>
           <packing>
@@ -351,12 +346,14 @@
     <property name="text" translatable="yes">Confirm</property>
     <property name="secondary_text" translatable="yes">Are you sure to close Setup without saving configure?</property>
     <child internal-child="vbox">
-      <object class="GtkVBox" id="vbox60">
+      <object class="GtkBox" id="vbox60">
         <property name="visible">True</property>
+        <property name="orientation">vertical</property>
         <property name="spacing">2</property>
         <child internal-child="action_area">
-          <object class="GtkHButtonBox" id="hbuttonbox60">
+          <object class="GtkButtonBox" id="hbuttonbox60">
             <property name="visible">True</property>
+            <property name="orientation">horizontal</property>
             <property name="layout_style">end</property>
           </object>
           <packing>
@@ -370,14 +367,14 @@
   </object>
   <object class="GtkAboutDialog" id="about_dialog">
     <property name="program-name">IBus-Input-Pad</property>
-    <property name="copyright">Copyright (c) 2010 Takao Fujiwara
-Copyright (c) 2010 Red Hat, Inc.</property>
+    <property name="copyright">Copyright (c) 2014 Takao Fujiwara
+Copyright (c) 2014 Red Hat, Inc.</property>
     <property name="comments" translatable="yes">The input pad engine for IBus platform</property>
     <property name="license">GPL</property>
     <property name="website">http://code.google.com/p/input-pad/</property>
     <property name="authors">Takao Fujiwara &lt;takao.fujiwara1@gmail.com&gt;</property>
     <property name="translator-credits" translatable="yes">translator_credits</property>
-    <property name="logo-icon-name">input-pad</property>
+    <property name="logo-icon-name"/>
     <property name="wrap-license">True</property>
   </object>
 </interface>

@@ -57,13 +57,13 @@ main (int argc, char *argv[])
     textdomain (GETTEXT_PACKAGE);
 #endif
 
-    ibus_input_pad_setup_gtk2_init (&argc, &argv);
+    ibus_input_pad_setup_gtk_init (&argc, &argv);
 
     config = get_config ();
     g_assert (config != NULL);
-    dialog = ibus_input_pad_setup_gtk2_dialog_new (config);
-    ibus_input_pad_setup_gtk2_dialog_run (dialog);
-    ibus_input_pad_setup_gtk2_dialog_destroy (dialog);
+    dialog = ibus_input_pad_setup_gtk_dialog_new (config);
+    ibus_input_pad_setup_gtk_dialog_run (dialog);
+    ibus_input_pad_setup_gtk_dialog_destroy (dialog);
 
     return 0;
 }

@@ -1,7 +1,7 @@
 /* vim:set et sts=4: */
 /* ibus-input-pad - Input pad for IBus
- * Copyright (C) 2010-2011 Takao Fujiwara <takao.fujiwara1@gmail.com>
- * Copyright (C) 2010-2011 Red Hat, Inc.
+ * Copyright (C) 2010-2014 Takao Fujiwara <takao.fujiwara1@gmail.com>
+ * Copyright (C) 2010-2014 Red Hat, Inc.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,10 +39,11 @@ ibus_disconnected_cb (IBusBus  *bus,
     ibus_quit ();
 }
 
-static void
+static int
 start_component (int argc, char **argv)
 {
     IBusComponent *component;
+    int retval;
 
     ibus_init ();
 
@@ -83,9 +84,10 @@ start_component (int argc, char **argv)
 
     g_object_unref (component);
 
-    ibus_main ();
+    retval = ibus_input_pad_main ();
+    ibus_input_pad_finit ();
 
-    ibus_input_pad_exit ();
+    return retval;
 }
 
 int
@@ -97,7 +99,5 @@ main (int argc, char **argv)
     bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
     textdomain(GETTEXT_PACKAGE);
 
-    start_component (argc, argv);
-
-    return 0;
+    return start_component (argc, argv);
 }

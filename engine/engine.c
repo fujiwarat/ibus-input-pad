@@ -1,7 +1,7 @@
 /* vim:set et sts=4: */
 /* ibus-input-pad - Input pad for IBus
- * Copyright (C) 2010-2011 Takao Fujiwara <takao.fujiwara1@gmail.com>
- * Copyright (C) 2010-2011 Red Hat, Inc.
+ * Copyright (C) 2010-2014 Takao Fujiwara <takao.fujiwara1@gmail.com>
+ * Copyright (C) 2010-2014 Red Hat, Inc.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,7 +39,6 @@ struct _IBusInputPadEngine {
 
     /* members */
     IBusPropList   *prop_list;
-    void           *window_data;
     GSList         *str_list;
 };
 
@@ -47,6 +46,12 @@ struct _IBusInputPadEngineClass {
     IBusEngineClass parent;
 };
 
+static void     on_window_activated         (gpointer          window_data,
+                                             gpointer          data);
+static void     set_keyboard_only_kbdui     (void             *window);
+static void     set_default_kbdui           (void             *window);
+static void     show_keyboard_only_table    (void             *window);
+static void     show_default_table          (void             *window);
 static GObject* ibus_input_pad_engine_constructor
                                             (GType                   type,
                                              guint                   n_construct_params,
@@ -103,16 +108,34 @@ static void
 on_window_destroy (gpointer window_data, gpointer data)
 {
     IBusInputPadEngine *engine = (IBusInputPadEngine *) data;
+    void *gtk_window = input_pad_window_get_window (input_pad_window);
 
-    g_signal_handlers_disconnect_by_func (G_OBJECT (engine->window_data),
-                                          G_CALLBACK (on_window_button_pressed),
-                                          (gpointer) engine);
-    g_signal_handlers_disconnect_by_func (G_OBJECT (engine->window_data),
-                                          G_CALLBACK (on_window_destroy),
-                                          (gpointer) engine);
+    if (gtk_window != NULL) {
+        g_signal_handlers_disconnect_by_func (G_OBJECT (gtk_window),
+                                              G_CALLBACK (on_window_button_pressed),
+                                              (gpointer) engine);
+        g_signal_handlers_disconnect_by_func (G_OBJECT (gtk_window),
+                                              G_CALLBACK (on_window_destroy),
+                                              (gpointer) engine);
+    }
 
-    input_pad_window = NULL;
-    engine->window_data = NULL;
+    input_pad_window_activate (input_pad_window);
+}
+
+static void
+on_window_activated (gpointer window_data, gpointer data)
+{
+    IBusInputPadEngine *engine = IBUS_INPUT_PAD_ENGINE (data);
+    void *gtk_window = input_pad_window_get_window (input_pad_window);
+
+    g_signal_connect (G_OBJECT (gtk_window),
+                      "destroy",
+                      G_CALLBACK (on_window_destroy),
+                      (gpointer) engine);
+    g_signal_connect (G_OBJECT (gtk_window),
+                      "button-pressed",
+                      G_CALLBACK (on_window_button_pressed),
+                      (gpointer) engine);
 }
 
 static void
@@ -150,21 +173,11 @@ ibus_input_pad_engine_init (IBusInputPadEngine *engine)
     IBusProperty *input_pad_prop;
     IBusProperty *prop;
     IBusPropList *prop_list;
+    void *gtk_window;
 
     engine->prop_list = ibus_prop_list_new ();
     g_object_ref_sink (engine->prop_list);
 
-#ifdef IBUS_DEPRECATED_LANGUAGE_MENU_ITEM
-    label = ibus_text_new_from_string (_("Launch Input Pad"));
-    tooltip = ibus_text_new_from_string (_("Launch Input Pad"));
-    prop = ibus_property_new ("show-input-pad",
-                              PROP_TYPE_NORMAL,
-                              label,
-                              "ibus-setup",
-                              tooltip,
-                              TRUE, TRUE, PROP_STATE_UNCHECKED, NULL);
-    ibus_prop_list_append (engine->prop_list, prop);
-#else
     label = ibus_text_new_from_string (_("Launch Input Pad"));
     tooltip = ibus_text_new_from_string (_("Launch Input Pad"));
     input_pad_prop = ibus_property_new ("ibus-shared-menu",
@@ -198,7 +211,6 @@ ibus_input_pad_engine_init (IBusInputPadEngine *engine)
     ibus_prop_list_append (prop_list, prop);
 
     ibus_property_set_sub_props (input_pad_prop, prop_list);
-#endif
 
     label = ibus_text_new_from_string (_("Setup Input Pad"));
     tooltip = ibus_text_new_from_string (_("Configure Input Pad"));
@@ -210,9 +222,23 @@ ibus_input_pad_engine_init (IBusInputPadEngine *engine)
                               TRUE, TRUE, PROP_STATE_UNCHECKED, NULL);
     ibus_prop_list_append (engine->prop_list, prop);
 
-    /* FIXME: This is not used currently? */
-    if (engine->window_data == NULL)
-        engine->window_data = input_pad_window;
+    gtk_window = input_pad_window_get_window (input_pad_window);
+
+    if (gtk_window != NULL) {
+        g_signal_connect (G_OBJECT (gtk_window),
+                          "destroy",
+                          G_CALLBACK (on_window_destroy),
+                          (gpointer) engine);
+        g_signal_connect (G_OBJECT (gtk_window),
+                          "button-pressed",
+                          G_CALLBACK (on_window_button_pressed),
+                          (gpointer) engine);
+    }
+
+    g_signal_connect (G_OBJECT (input_pad_window),
+                      "activated",
+                      G_CALLBACK (on_window_activated),
+                      (gpointer) engine);
 }
 
 static GObject*
@@ -259,10 +285,6 @@ ibus_input_pad_engine_destroy (IBusObject *object)
         free_str_list (engine->str_list);
         engine->str_list = NULL;
     }
-    if (engine->window_data) {
-        input_pad_window_destroy (engine->window_data);
-        g_assert (engine->window_data == NULL);
-    }
     IBUS_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
@@ -278,27 +300,15 @@ ibus_input_pad_engine_process_key_event (IBusEngine    *engine,
 static void
 ibus_input_pad_engine_enable (IBusEngine *engine)
 {
-    IBusInputPadEngine *input_pad = (IBusInputPadEngine *) engine;
-
     parent_class->enable (engine);
-    input_pad->window_data = input_pad_window;
-    if (input_pad->window_data) {
-        input_pad_window_set_char_button_sensitive (input_pad->window_data,
-                                                    TRUE);
-    }
+    input_pad_window_set_char_button_sensitive (input_pad_window, TRUE);
 }
 
 static void
 ibus_input_pad_engine_disable (IBusEngine *engine)
 {
-    IBusInputPadEngine *input_pad = (IBusInputPadEngine *) engine;
-
     parent_class->disable (engine);
-    input_pad->window_data = input_pad_window;
-    if (input_pad->window_data) {
-        input_pad_window_set_char_button_sensitive (input_pad->window_data,
-                                                    FALSE);
-    }
+    input_pad_window_set_char_button_sensitive (input_pad_window, FALSE);
 }
 
 static void
@@ -310,32 +320,13 @@ ibus_input_pad_engine_focus_in (IBusEngine *engine)
 
     parent_class->focus_in (engine);
 
-    input_pad->window_data = input_pad_window;
-    if (input_pad->window_data == NULL) {
-        return;
-    }
-
-    g_signal_connect (G_OBJECT (input_pad->window_data),
-                      "button-pressed",
-                      G_CALLBACK (on_window_button_pressed), (gpointer) engine);
-    input_pad_window_reorder_button_pressed (input_pad->window_data);
+    input_pad_window_reorder_button_pressed (input_pad_window);
 }
 
 static void
 ibus_input_pad_engine_focus_out (IBusEngine *engine)
 {
-    IBusInputPadEngine *input_pad = (IBusInputPadEngine *) engine;
-
     parent_class->focus_out (engine);
-
-    input_pad->window_data = input_pad_window;
-    if (input_pad->window_data == NULL) {
-        return;
-    }
-
-    g_signal_handlers_disconnect_by_func (G_OBJECT (input_pad->window_data),
-                                          G_CALLBACK (on_window_button_pressed),
-                                          (gpointer) engine);
 }
 
 #if 0
@@ -431,7 +422,6 @@ ibus_input_pad_engine_property_activate (IBusEngine *engine,
                                          guint       prop_state)
 {
     gboolean is_shown = FALSE;
-    IBusInputPadEngine *input_pad = (IBusInputPadEngine *) engine;
     GError *error = NULL;
     gchar *argv[2] = { NULL, };
     gchar *path;
@@ -442,23 +432,19 @@ ibus_input_pad_engine_property_activate (IBusEngine *engine,
 
     if (!g_strcmp0 (prop_name, "show-input-pad") ||
         !g_strcmp0 (prop_name, "show-input-pad-layout-only")) {
-        void *window = NULL;
+        void *window = input_pad_window;
 
-        if (input_pad_window == NULL || input_pad->window_data == NULL) {
-            input_pad_window = input_pad_window_new (TRUE);
-            input_pad->window_data = input_pad_window;
-            if (!g_strcmp0 (prop_name, "show-input-pad-layout-only")) {
-                set_keyboard_only_kbdui (input_pad_window);
-            } else {
-                set_default_kbdui (input_pad_window);
-            }
+        if (input_pad_window_get_window (window) == NULL)
+            return;
 
-            g_signal_connect (G_OBJECT (input_pad->window_data),
-                             "destroy",
-                             G_CALLBACK (on_window_destroy), (gpointer) engine);
-            ibus_input_pad_engine_focus_in (engine);
+        if (!g_strcmp0 (prop_name, "show-input-pad-layout-only")) {
+            set_keyboard_only_kbdui (window);
+        } else {
+            set_default_kbdui (window);
         }
-        window = input_pad->window_data;
+
+        ibus_input_pad_engine_focus_in (engine);
+
         // TODO: Update menu item label?
         /* is_shown = input_pad_window_get_visible (window); */
         if (is_shown) {
@@ -524,10 +510,19 @@ ibus_input_pad_init (int *argc, char ***argv, IBusBus *bus)
         g_object_ref_sink (config);
     }
     input_pad_window_init (argc, argv, 0);
+
+    input_pad_window = input_pad_window_new ();
+    input_pad_window_hide (input_pad_window);
+}
+
+int
+ibus_input_pad_main (void)
+{
+    return input_pad_window_main (input_pad_window);
 }
 
 void
-ibus_input_pad_exit (void)
+ibus_input_pad_finit (void)
 {
     g_object_unref (config);
     config = NULL;

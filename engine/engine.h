@@ -23,12 +23,20 @@
 
 #include <ibus.h>
 
-#define IBUS_TYPE_INPUT_PAD_ENGINE \
+#define IBUS_TYPE_INPUT_PAD_ENGINE                                      \
         (ibus_input_pad_engine_get_type ())
+#define IBUS_INPUT_PAD_ENGINE(o)                                        \
+        (G_TYPE_CHECK_INSTANCE_CAST ((o),                               \
+         IBUS_TYPE_INPUT_PAD_ENGINE,                                    \
+         IBusInputPadEngine))
+#define IBUS_IS_INPUT_PAD_ENGINE(o)                                     \
+        (G_TYPE_CHECK_INSTANCE_TYPE ((o),                               \
+         IBUS_TYPE_INPUT_PAD_ENGINE))
 
 GType   ibus_input_pad_engine_get_type    (void);
 
 void    ibus_input_pad_init (int *argc, char ***argv, IBusBus *bus);
-void    ibus_input_pad_exit (void);
+int     ibus_input_pad_main (void);
+void    ibus_input_pad_finit (void);
 
 #endif
