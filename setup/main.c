@@ -29,8 +29,8 @@
 #include <libintl.h>
 #endif
 
-#include "iconfig-gtk2.h"
-#include "setup-gtk2.h"
+#include "iconfig-gtk.h"
+#include "setup-gtk.h"
 
 static IBusInputPadConfig *
 get_config (void)

@@ -27,8 +27,8 @@
 #include <string.h>       /* strlen */
 
 #include "i18n.h"
-#include "iconfig-gtk2.h"
-#include "setup-gtk2.h"
+#include "iconfig-gtk.h"
+#include "setup-gtk.h"
 
 #define ENGINE_INPUT_PAD_SECTION "engine/input-pad"
 

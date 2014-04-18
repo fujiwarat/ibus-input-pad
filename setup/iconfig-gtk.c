@@ -25,7 +25,7 @@
 #include <ibus.h>
 #include <glib.h>
 
-#include "iconfig-gtk2.h"
+#include "iconfig-gtk.h"
 
 #define IBUS_INPUT_PAD_CONFIG_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), IBUS_TYPE_INPUT_PAD_CONFIG, IBusInputPadConfigPrivate))
 

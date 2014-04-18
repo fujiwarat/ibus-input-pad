@@ -23,7 +23,7 @@ noinst_DIST = \
 	$(NULL)
 
 setupdir=$(pkgdatadir)/setup
-setup_DATA=setup-gtk2.ui
+setup_DATA=setup-gtk.ui
 
 AM_CPPFLAGS = \
 	-I$(top_srcdir)                                                 \
@@ -37,8 +37,8 @@ noinst_LTLIBRARIES = \
 	$(NULL)
 
 libiconfig_la_SOURCES = \
-	iconfig-gtk2.c                                                  \
-	iconfig-gtk2.h                                                  \
+	iconfig-gtk.c                                                   \
+	iconfig-gtk.h                                                   \
 	$(NULL)
 
 libiconfig_la_CFLAGS = \
@@ -59,8 +59,8 @@ libexec_PROGRAMS = ibus-setup-input-pad
 
 ibus_setup_input_pad_SOURCES = \
 	main.c                                                          \
-	setup-gtk2.c                                                    \
-	setup-gtk2.h                                                    \
+	setup-gtk.c                                                     \
+	setup-gtk.h                                                     \
 	$(NULL)
 
 ibus_setup_input_pad_CFLAGS = \
@@ -101,7 +101,7 @@ desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 
 EXTRA_DIST = \
 	$(desktop_in_in_files)                                          \
-	setup-gtk2.ui                                                   \
+	setup-gtk.ui                                                    \
 	$(NULL)
 
 CLEANFILES = \
