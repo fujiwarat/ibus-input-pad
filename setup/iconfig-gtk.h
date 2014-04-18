@@ -34,7 +34,7 @@ G_BEGIN_DECLS
 #define IBUS_INPUT_PAD_CONFIG_GET_CLASS(o)     (G_TYPE_INSTANCE_GET_CLASS ((o), IBUS_TYPE_INPUT_PAD_CONFIG, IBusInputPadConfigClass))
 
 #define CHAR_TABLE_COMBO_BOX_DEFAULT            1
-#define LAYOUT_TABLE_COMBO_BOX_DEFAULT          1
+#define LAYOUT_TABLE_COMBO_BOX_DEFAULT          0
 #define KEYBOARD_THEME_DEFAULT                 "default"
 
 typedef struct _IBusInputPadConfig IBusInputPadConfig;
