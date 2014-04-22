@@ -40,7 +40,6 @@
   </object>
   <object class="GtkDialog" id="setup_dialog">
     <property name="title" translatable="yes">IBus-Input-Pad Setup</property>
-    <property name="accept-focus">False</property>
     <child internal-child="vbox">
       <object class="GtkBox" id="vbox1">
         <property name="visible">True</property>
