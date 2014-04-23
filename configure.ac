@@ -20,10 +20,11 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 dnl - if not 1, append datestamp to the version number.
-m4_define([ibus_released], [1])
+m4_define([ibus_released], [0])
 m4_define([ibus_major_version], [1])
 m4_define([ibus_minor_version], [4])
-m4_define([ibus_micro_version], [2])
+m4_define([ibus_micro_version], [99])
+m4_define([pad_abi_current], [1])
 m4_define(ibus_maybe_datestamp,
     m4_esyscmd([if test x]ibus_released[ != x1; then date +.%Y%m%d | tr -d '\n\r'; fi]))
 
@@ -38,7 +39,7 @@ AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])
 
 dnl - VERSION
-libinput_pad_VERSION="ibus_major_version.ibus_minor_version"
+libinput_pad_VERSION="ibus_major_version.pad_abi_current"
 AC_SUBST(libinput_pad_VERSION)
 AC_MSG_NOTICE([$PACKAGE sub version $libinput_pad_VERSION])
 
@@ -70,11 +71,11 @@ PKG_CHECK_MODULES(GTK3, [
 ])
 
 PKG_CHECK_MODULES(IBUS,
-    ibus-1.0 >= 1.2.0.20100111,
+    ibus-1.0 >= 1.5.3
 )
 
 PKG_CHECK_MODULES(INPUT_PAD, [
-    input-pad
+    input-pad >= 1.0.99
 ])
 
 dnl - set ibus-input-pad layout
