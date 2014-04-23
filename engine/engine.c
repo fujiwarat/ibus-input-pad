@@ -29,7 +29,7 @@
 #include <input-pad-group.h>
 #include "engine.h"
 #include "i18n.h"
-#include "iconfig-gtk2.h"
+#include "iconfig-gtk.h"
 
 typedef struct _IBusInputPadEngine IBusInputPadEngine;
 typedef struct _IBusInputPadEngineClass IBusInputPadEngineClass;
