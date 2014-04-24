@@ -36,15 +36,15 @@ typedef struct _IBusInputPadEngine IBusInputPadEngine;
 typedef struct _IBusInputPadEngineClass IBusInputPadEngineClass;
 
 struct _IBusInputPadEngine {
-    IBusEngine      parent;
+    IBusEngineSimple            parent;
 
     /* members */
-    IBusPropList   *prop_list;
-    GSList         *str_list;
+    IBusPropList               *prop_list;
+    GSList                     *str_list;
 };
 
 struct _IBusInputPadEngineClass {
-    IBusEngineClass parent;
+    IBusEngineSimpleClass       parent;
 };
 
 static void     on_window_activated         (gpointer          window_data,
@@ -494,7 +494,7 @@ ibus_input_pad_engine_get_type (void)
     };
 
     if (type == 0) {
-            type = g_type_register_static (IBUS_TYPE_ENGINE,
+            type = g_type_register_static (IBUS_TYPE_ENGINE_SIMPLE,
                                            "IBusInputPadEngine",
                                            &type_info,
                                            (GTypeFlags) 0);
