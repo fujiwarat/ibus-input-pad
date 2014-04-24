@@ -24,6 +24,7 @@
 
 #include <ibus.h>
 #include <glib.h>
+#include <stdlib.h> /* exit */
 
 #include <input-pad.h>
 #include <input-pad-group.h>
@@ -505,11 +506,20 @@ ibus_input_pad_engine_get_type (void)
 void
 ibus_input_pad_init (int *argc, char ***argv, IBusBus *bus)
 {
+    int retval;
+    gboolean do_exit = FALSE;
+
     config = ibus_bus_get_input_pad_config (bus);
     if (config) {
         g_object_ref_sink (config);
     }
-    input_pad_window_init (argc, argv, 0);
+    retval = input_pad_window_init (argc, argv, 0, &do_exit);
+
+    if (do_exit) {
+        g_object_unref (config);
+        config = NULL;
+        exit (retval);
+    }
 
     input_pad_window = input_pad_window_new ();
     input_pad_window_hide (input_pad_window);
