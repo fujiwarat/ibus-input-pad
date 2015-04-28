@@ -1,6 +1,9 @@
 ibus-input-pad
 It is Input Pad for IBus
 
+Home Page:
+https://github.com/fujiwarat/input-pad/wiki
+
 The ibus-input-pad version 1.4.x requires ibus 1.4(1.3.99.x) or later.
 If you use old ibus versions(1.2, 1.3), please use ibus-input-pad 0.1.x .
 
