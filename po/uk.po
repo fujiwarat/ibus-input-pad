@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ibus-input-pad HEAD\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/input-pad/issues/entry\n"
-"POT-Creation-Date: 2012-12-17 19:34+0900\n"
+"POT-Creation-Date: 2014-04-18 14:45+0900\n"
 "PO-Revision-Date: 2012-03-06 13:41+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian\n"
@@ -19,112 +19,135 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: ../engine/engine.c:158 ../engine/engine.c:159 ../engine/engine.c:168
-#: ../engine/engine.c:169
+#: ../engine/engine.c:181 ../engine/engine.c:182
 msgid "Launch Input Pad"
 msgstr "Запустити панель введення"
 
-#: ../engine/engine.c:180 ../engine/engine.c:181 ../engine/engine.c:361
+#: ../engine/engine.c:193 ../engine/engine.c:194 ../engine/engine.c:352
 msgid "Show Input Pad"
 msgstr "Показати панель введення"
 
-#: ../engine/engine.c:190 ../engine/engine.c:191
+#: ../engine/engine.c:203 ../engine/engine.c:204
 msgid "Show Input Pad (Keyboard Only)"
 msgstr "Показати панель введення (лише клавіатуру)"
 
-#: ../engine/engine.c:203
+#: ../engine/engine.c:215
 msgid "Setup Input Pad"
 msgstr "Встановити параметри панелі введення"
 
-#: ../engine/engine.c:204
+#: ../engine/engine.c:216
 msgid "Configure Input Pad"
 msgstr "Налаштувати панель введення"
 
-#: ../engine/engine.c:359
+#: ../engine/engine.c:350
 msgid "Hide Input Pad"
 msgstr "Сховати панель введення"
 
-#: ../engine/main.c:55 ../engine/main.c:64 ../engine/main.c:65
+#: ../engine/main.c:56 ../engine/main.c:65 ../engine/main.c:66
 msgid "Input Pad"
 msgstr "Панель введення"
 
-#: ../setup/setup-gtk2.c:360 ../setup/setup-gtk2.ui.h:4
+#: ../setup/ibus-setup-input-pad.desktop.in.in.h:1
+#, fuzzy
+#| msgid "IBus-Input-Pad Setup"
+msgid "IBus Input Pad Setup"
+msgstr "Налаштування панелі введення IBus"
+
+#: ../setup/ibus-setup-input-pad.desktop.in.in.h:2
+#, fuzzy
+#| msgid "Setup Input Pad"
+msgid "Set up IBus Input Pad engine"
+msgstr "Встановити параметри панелі введення"
+
+#: ../setup/setup-gtk.c:360 ../setup/setup-gtk.ui.h:4
 msgid "Default"
 msgstr "Типово"
 
-#: ../setup/setup-gtk2.c:397
+#: ../setup/setup-gtk.c:394
 msgid "Keyboard _Theme:"
 msgstr "_Тема клавіатури:"
 
-#: ../setup/setup-gtk2.c:400
+#: ../setup/setup-gtk.c:397
 msgid "Which theme you choose in kbdui modules"
 msgstr "Яку тему ви виберете для модулів kbdui"
 
-#: ../setup/setup-gtk2.ui.h:1
+#: ../setup/setup-gtk.ui.h:1
 msgid "Nothing"
 msgstr "Нічого"
 
-#: ../setup/setup-gtk2.ui.h:2
+#: ../setup/setup-gtk.ui.h:2
 msgid "Custom"
 msgstr "Нетипове"
 
-#: ../setup/setup-gtk2.ui.h:3
+#: ../setup/setup-gtk.ui.h:3
 msgid "All"
 msgstr "Всі"
 
-#: ../setup/setup-gtk2.ui.h:5
+#: ../setup/setup-gtk.ui.h:5
 msgid "IBus-Input-Pad Setup"
 msgstr "Налаштування панелі введення IBus"
 
-#: ../setup/setup-gtk2.ui.h:6
+#: ../setup/setup-gtk.ui.h:6
 msgid "_Character Table Type:"
 msgstr "Т_ип таблиці символів:"
 
-#: ../setup/setup-gtk2.ui.h:7
+#: ../setup/setup-gtk.ui.h:7
 msgid "Whether you show the character table or not"
 msgstr "Чи слід показувати таблицю символів"
 
-#: ../setup/setup-gtk2.ui.h:8
+#: ../setup/setup-gtk.ui.h:8
 msgid "_Keyboard Layout Type:"
 msgstr "Тип _розкладки клавіатури:"
 
-#: ../setup/setup-gtk2.ui.h:9
+#: ../setup/setup-gtk.ui.h:9
 msgid "Whether you show the keyboard layout or not"
 msgstr "Чи слід показувати розкладку клавіатури"
 
-#: ../setup/setup-gtk2.ui.h:10
+#: ../setup/setup-gtk.ui.h:10
 msgid "<b>Default Appearance</b>"
 msgstr "<b>Типовий вигляд</b>"
 
-#: ../setup/setup-gtk2.ui.h:11
+#: ../setup/setup-gtk.ui.h:11
 msgid "<b>Keyboard Only Appearance</b>"
 msgstr "<b>Вигляд клавіатури</b>"
 
-#: ../setup/setup-gtk2.ui.h:12
+#: ../setup/setup-gtk.ui.h:12
 msgid "General"
 msgstr "Загальне"
 
-#: ../setup/setup-gtk2.ui.h:13
+#: ../setup/setup-gtk.ui.h:13
 msgid "About"
 msgstr "Про програму"
 
-#: ../setup/setup-gtk2.ui.h:14
+#: ../setup/setup-gtk.ui.h:14
+msgid "_Apply"
+msgstr ""
+
+#: ../setup/setup-gtk.ui.h:15
+msgid "_Cancel"
+msgstr ""
+
+#: ../setup/setup-gtk.ui.h:16
+msgid "_OK"
+msgstr ""
+
+#: ../setup/setup-gtk.ui.h:17
 msgid "Confirm"
 msgstr "Підтвердити"
 
-#: ../setup/setup-gtk2.ui.h:15
+#: ../setup/setup-gtk.ui.h:18
 msgid "Are you sure to close Setup?"
 msgstr "Ви справді бажаєте закрити вікно налаштовування?"
 
-#: ../setup/setup-gtk2.ui.h:16
+#: ../setup/setup-gtk.ui.h:19
 msgid "Are you sure to close Setup without saving configure?"
 msgstr ""
 "Ви справді бажаєте закрити вікно налаштовування без збереження параметрів?"
 
-#: ../setup/setup-gtk2.ui.h:17
+#: ../setup/setup-gtk.ui.h:20
 msgid "The input pad engine for IBus platform"
 msgstr "Рушій панелі введення для платформи IBus"
 
-#: ../setup/setup-gtk2.ui.h:18
+#: ../setup/setup-gtk.ui.h:21
 msgid "translator_credits"
 msgstr "Юрій Чорноіван <yurchor@ukr.net>"
