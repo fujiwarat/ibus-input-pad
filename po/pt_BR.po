@@ -1,151 +1,151 @@
-# Telugu translations for ibus-input-pad
-# Copyright (C) 2010-2012 Takao Fujiwara <takao.fujiwara1@gmail.com>
+# Source translations for ibus-input-pad
+# Copyright (C) 2010-2014 Takao Fujiwara <takao.fujiwara1@gmail.com>
 # This file is distributed under the same license as the ibus-input-pad package.
-#
-# Translators:
-# ప్రవీణ్ యిళ్ళ <mail2ipn@gmail.com>, 2011.
+# Rafael Fontenelle <rafaelff@gnome.org>, 2020, 2021.
+# Anonymous <noreply@weblate.org>, 2020.
+# Caio Fontes de Castro <caiofcastro@usp.br>, 2020, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: ibus-input-pad HEAD\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/input-pad/issues/entry\n"
 "POT-Creation-Date: 2014-04-18 14:45+0900\n"
-"PO-Revision-Date: 2012-02-14 08:36+0000\n"
-"Last-Translator: ప్రవీణ్ ఇళ్ళ <mail2ipn@gmail.com>\n"
-"Language-Team: Telugu\n"
-"Language: te\n"
+"PO-Revision-Date: 2021-03-08 02:01+0000\n"
+"Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
+"Language-Team: Portuguese (Brazil) <https://translate.fedoraproject.org/"
+"projects/ibus-input-pad/master/pt_BR/>\n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.5.1\n"
 
 #: ../engine/engine.c:181 ../engine/engine.c:182
 msgid "Launch Input Pad"
-msgstr "ఇన్‌పుట్ ప్యాడ్ ప్రారంభించు"
+msgstr "Iniciar painel de entrada"
 
 #: ../engine/engine.c:193 ../engine/engine.c:194 ../engine/engine.c:352
 msgid "Show Input Pad"
-msgstr "ఇన్‌పుట్ ప్యాడ్ చూపించు"
+msgstr "Mostrar painel de entrada"
 
 #: ../engine/engine.c:203 ../engine/engine.c:204
 msgid "Show Input Pad (Keyboard Only)"
-msgstr "ఇన్‌పుట్ ప్యాడ్ చూపించు(కీబోర్డు మాత్రమే)"
+msgstr "Mostrar painel de entrada (apenas teclado)"
 
 #: ../engine/engine.c:215
 msgid "Setup Input Pad"
-msgstr "ఇన్‌పుట్ ప్యాడ్ అమర్చు"
+msgstr "Iniciar painel de entrada"
 
 #: ../engine/engine.c:216
 msgid "Configure Input Pad"
-msgstr "ఇన్‌పుట్ ప్యాడ్ స్వరూపించు"
+msgstr "Configurar painel de entrada"
 
 #: ../engine/engine.c:350
 msgid "Hide Input Pad"
-msgstr "ఇన్‌పుట్ ప్యాడ్‌ను దాయి"
+msgstr "Ocultar painel de entrada"
 
 #: ../engine/main.c:56 ../engine/main.c:65 ../engine/main.c:66
 msgid "Input Pad"
-msgstr "ఇన్‌పుట్ ప్యాడ్"
+msgstr "Painel de entrada"
 
 #: ../setup/ibus-setup-input-pad.desktop.in.in.h:1
-#, fuzzy
-#| msgid "Setup Input Pad"
 msgid "IBus Input Pad Setup"
-msgstr "ఇన్‌పుట్ ప్యాడ్ అమర్చు"
+msgstr "Configuração do painel de entrada do IBus"
 
 #: ../setup/ibus-setup-input-pad.desktop.in.in.h:2
-#, fuzzy
-#| msgid "Setup Input Pad"
 msgid "Set up IBus Input Pad engine"
-msgstr "ఇన్‌పుట్ ప్యాడ్ అమర్చు"
+msgstr "Configure o motor IBus Input Pad"
 
 #: ../setup/setup-gtk.c:360 ../setup/setup-gtk.ui.h:4
 msgid "Default"
-msgstr "అప్రమేయం"
+msgstr "Padrão"
 
 #: ../setup/setup-gtk.c:394
 msgid "Keyboard _Theme:"
-msgstr "కీబోర్డు థీమ్(_T):"
+msgstr "_Tema do teclado:"
 
 #: ../setup/setup-gtk.c:397
 msgid "Which theme you choose in kbdui modules"
-msgstr ""
+msgstr "Qual tema usar nos módulos kbdui"
 
 #: ../setup/setup-gtk.ui.h:1
 msgid "Nothing"
-msgstr ""
+msgstr "Nada"
 
 #: ../setup/setup-gtk.ui.h:2
 msgid "Custom"
-msgstr "అనురూపిత"
+msgstr "Personalizado"
 
 #: ../setup/setup-gtk.ui.h:3
 msgid "All"
-msgstr "అన్ని"
+msgstr "Todos"
 
 #: ../setup/setup-gtk.ui.h:5
 msgid "IBus-Input-Pad Setup"
-msgstr ""
+msgstr "Configuração do painel de entrada do IBus"
 
 #: ../setup/setup-gtk.ui.h:6
 msgid "_Character Table Type:"
-msgstr ""
+msgstr "Tipo de tabela de _caracteres:"
 
 #: ../setup/setup-gtk.ui.h:7
 msgid "Whether you show the character table or not"
-msgstr ""
+msgstr "Se deseja mostrar a tabela de caracteres ou não"
 
 #: ../setup/setup-gtk.ui.h:8
 msgid "_Keyboard Layout Type:"
-msgstr "కీబోర్డు నమూనా రకం(_K):"
+msgstr "Tipo de _disposição do teclado:"
 
 #: ../setup/setup-gtk.ui.h:9
 msgid "Whether you show the keyboard layout or not"
-msgstr ""
+msgstr "Se deseja mostrar a disposição do teclado ou não"
 
 #: ../setup/setup-gtk.ui.h:10
 msgid "<b>Default Appearance</b>"
-msgstr "<b>అప్రమేయ స్వరూపం</b>"
+msgstr "<b>Aparência padrão</b>"
 
 #: ../setup/setup-gtk.ui.h:11
 msgid "<b>Keyboard Only Appearance</b>"
-msgstr "<b>కీబోర్డు స్వరూపం</b>"
+msgstr "<b>Aparência apenas do teclado</b>"
 
 #: ../setup/setup-gtk.ui.h:12
 msgid "General"
-msgstr "సాధారణం"
+msgstr "Geral"
 
 #: ../setup/setup-gtk.ui.h:13
 msgid "About"
-msgstr "గురించి"
+msgstr "Sobre"
 
 #: ../setup/setup-gtk.ui.h:14
 msgid "_Apply"
-msgstr ""
+msgstr "_Aplicar"
 
 #: ../setup/setup-gtk.ui.h:15
 msgid "_Cancel"
-msgstr ""
+msgstr "_Cancelar"
 
 #: ../setup/setup-gtk.ui.h:16
 msgid "_OK"
-msgstr ""
+msgstr "_OK"
 
 #: ../setup/setup-gtk.ui.h:17
 msgid "Confirm"
-msgstr "నిర్ధారించు"
+msgstr "Confirmar"
 
 #: ../setup/setup-gtk.ui.h:18
 msgid "Are you sure to close Setup?"
-msgstr "అమరికను ఖచ్చితముగా మూసివేయాలనుకుంటున్నారా?"
+msgstr "Tem certeza que deseja fechar a configuração?"
 
 #: ../setup/setup-gtk.ui.h:19
 msgid "Are you sure to close Setup without saving configure?"
-msgstr ""
+msgstr "Tem certeza que deseja fechar a configuração sem salvar?"
 
 #: ../setup/setup-gtk.ui.h:20
 msgid "The input pad engine for IBus platform"
-msgstr ""
+msgstr "O motor de painel de entrada para a plataforma IBus"
 
 #: ../setup/setup-gtk.ui.h:21
 msgid "translator_credits"
-msgstr "Praveen Illa <mail2ipn@gmail.com>, 2011"
+msgstr ""
+"Rafael Fontenelle <rafaelff@gnome.org>\n"
+"Caio Fontes <caiofcastro@usp.br>"

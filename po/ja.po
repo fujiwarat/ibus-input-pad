@@ -12,10 +12,10 @@ msgstr ""
 "PO-Revision-Date: 2014-04-22 06:14+0000\n"
 "Last-Translator: fujiwara <tfujiwar@redhat.com>\n"
 "Language-Team: Japanese\n"
+"Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: ja\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../engine/engine.c:181 ../engine/engine.c:182
