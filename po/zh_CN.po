@@ -3,117 +3,118 @@
 # This file is distributed under the same license as the ibus-input-pad package.
 #
 # Liu Tao <lyuutau@outlook.com>, 2024.
+# Jingge Chen <mariocanfly@hotmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: ibus-input-pad HEAD\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/input-pad/issues/entry\n"
 "POT-Creation-Date: 2014-04-18 14:45+0900\n"
-"PO-Revision-Date: 2024-01-07 14:36+0000\n"
-"Last-Translator: Liu Tao <lyuutau@outlook.com>\n"
-"Language-Team: Chinese (Simplified) <https://translate.fedoraproject.org/"
-"projects/ibus-input-pad/master/zh_CN/>\n"
+"PO-Revision-Date: 2025-03-08 12:38+0000\n"
+"Last-Translator: Jingge Chen <mariocanfly@hotmail.com>\n"
+"Language-Team: Chinese (Simplified) <https://"
+"translate.fedoraproject.org/projects/ibus-input-pad/master/zh_CN/>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.3.1\n"
+"X-Generator: Weblate 5.10.2\n"
 
 #: ../engine/engine.c:181 ../engine/engine.c:182
 msgid "Launch Input Pad"
-msgstr ""
+msgstr "启动输入板"
 
 #: ../engine/engine.c:193 ../engine/engine.c:194 ../engine/engine.c:352
 msgid "Show Input Pad"
-msgstr ""
+msgstr "显示输入板"
 
 #: ../engine/engine.c:203 ../engine/engine.c:204
 msgid "Show Input Pad (Keyboard Only)"
-msgstr ""
+msgstr "显示输入板（ 仅键盘）"
 
 #: ../engine/engine.c:215
 msgid "Setup Input Pad"
-msgstr ""
+msgstr "设置输入板"
 
 #: ../engine/engine.c:216
 msgid "Configure Input Pad"
-msgstr ""
+msgstr "设定输入板"
 
 #: ../engine/engine.c:350
 msgid "Hide Input Pad"
-msgstr ""
+msgstr "隐藏输入板"
 
 #: ../engine/main.c:56 ../engine/main.c:65 ../engine/main.c:66
 msgid "Input Pad"
-msgstr ""
+msgstr "输入板"
 
 #: ../setup/ibus-setup-input-pad.desktop.in.in.h:1
 msgid "IBus Input Pad Setup"
-msgstr ""
+msgstr "IBus 输入板设置"
 
 #: ../setup/ibus-setup-input-pad.desktop.in.in.h:2
 msgid "Set up IBus Input Pad engine"
-msgstr ""
+msgstr "设置 IBus 输入板引擎"
 
 #: ../setup/setup-gtk.c:360 ../setup/setup-gtk.ui.h:4
 msgid "Default"
-msgstr ""
+msgstr "默认"
 
 #: ../setup/setup-gtk.c:394
 msgid "Keyboard _Theme:"
-msgstr ""
+msgstr "键盘主题(_T)："
 
 #: ../setup/setup-gtk.c:397
 msgid "Which theme you choose in kbdui modules"
-msgstr ""
+msgstr "您想要 kbdui 模块使用哪个主题"
 
 #: ../setup/setup-gtk.ui.h:1
 msgid "Nothing"
-msgstr ""
+msgstr "无"
 
 #: ../setup/setup-gtk.ui.h:2
 msgid "Custom"
-msgstr ""
+msgstr "自定义"
 
 #: ../setup/setup-gtk.ui.h:3
 msgid "All"
-msgstr ""
+msgstr "全部"
 
 #: ../setup/setup-gtk.ui.h:5
 msgid "IBus-Input-Pad Setup"
-msgstr ""
+msgstr "IBus-Input-Pad 设置"
 
 #: ../setup/setup-gtk.ui.h:6
 msgid "_Character Table Type:"
-msgstr ""
+msgstr "字符表类型（_C）："
 
 #: ../setup/setup-gtk.ui.h:7
 msgid "Whether you show the character table or not"
-msgstr ""
+msgstr "是否显示字符表"
 
 #: ../setup/setup-gtk.ui.h:8
 msgid "_Keyboard Layout Type:"
-msgstr ""
+msgstr "键盘布局类型(_K)："
 
 #: ../setup/setup-gtk.ui.h:9
 msgid "Whether you show the keyboard layout or not"
-msgstr ""
+msgstr "是否显示键盘布局"
 
 #: ../setup/setup-gtk.ui.h:10
 msgid "<b>Default Appearance</b>"
-msgstr ""
+msgstr "<b>默认外观</b>"
 
 #: ../setup/setup-gtk.ui.h:11
 msgid "<b>Keyboard Only Appearance</b>"
-msgstr ""
+msgstr "<b>仅键盘外观</b>"
 
 #: ../setup/setup-gtk.ui.h:12
 msgid "General"
-msgstr ""
+msgstr "常规"
 
 #: ../setup/setup-gtk.ui.h:13
 msgid "About"
-msgstr ""
+msgstr "关于"
 
 #: ../setup/setup-gtk.ui.h:14
 msgid "_Apply"
@@ -125,24 +126,24 @@ msgstr "取消(_C)"
 
 #: ../setup/setup-gtk.ui.h:16
 msgid "_OK"
-msgstr ""
+msgstr "确定（_O）"
 
 #: ../setup/setup-gtk.ui.h:17
 msgid "Confirm"
-msgstr ""
+msgstr "确认"
 
 #: ../setup/setup-gtk.ui.h:18
 msgid "Are you sure to close Setup?"
-msgstr ""
+msgstr "您确定要关闭设置吗？"
 
 #: ../setup/setup-gtk.ui.h:19
 msgid "Are you sure to close Setup without saving configure?"
-msgstr ""
+msgstr "您确定要关闭设置而不保存吗？"
 
 #: ../setup/setup-gtk.ui.h:20
 msgid "The input pad engine for IBus platform"
-msgstr ""
+msgstr "IBus 平台的输入板引擎"
 
 #: ../setup/setup-gtk.ui.h:21
 msgid "translator_credits"
-msgstr ""
+msgstr "Chen Jingge <mariocanfly@hotmail.com>, 2025, 03."
