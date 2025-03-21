@@ -9,9 +9,8 @@ msgstr ""
 "Project-Id-Version: ibus-input-pad HEAD\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/input-pad/issues/entry\n"
 "POT-Creation-Date: 2014-04-18 14:45+0900\n"
-"PO-Revision-Date: 2024-01-24 13:24+0000\n"
-"Last-Translator: Weblate Translation Memory <noreply-mt-weblate-translation-"
-"memory@weblate.org>\n"
+"PO-Revision-Date: 2024-01-25 13:36+0000\n"
+"Last-Translator: 김인수 <simmon@nplob.com>\n"
 "Language-Team: Korean <https://translate.fedoraproject.org/projects/"
 "ibus-input-pad/master/ko/>\n"
 "Language: ko\n"
@@ -23,39 +22,39 @@ msgstr ""
 
 #: ../engine/engine.c:181 ../engine/engine.c:182
 msgid "Launch Input Pad"
-msgstr ""
+msgstr "입력 패드 실행"
 
 #: ../engine/engine.c:193 ../engine/engine.c:194 ../engine/engine.c:352
 msgid "Show Input Pad"
-msgstr ""
+msgstr "입력 패드 표시"
 
 #: ../engine/engine.c:203 ../engine/engine.c:204
 msgid "Show Input Pad (Keyboard Only)"
-msgstr ""
+msgstr "입력 패드 표시 (키보드 전용)"
 
 #: ../engine/engine.c:215
 msgid "Setup Input Pad"
-msgstr ""
+msgstr "입력 패드 설정"
 
 #: ../engine/engine.c:216
 msgid "Configure Input Pad"
-msgstr ""
+msgstr "입력 패드를 구성합니다"
 
 #: ../engine/engine.c:350
 msgid "Hide Input Pad"
-msgstr ""
+msgstr "입력 패드를 숨깁니다"
 
 #: ../engine/main.c:56 ../engine/main.c:65 ../engine/main.c:66
 msgid "Input Pad"
-msgstr ""
+msgstr "입력 패드"
 
 #: ../setup/ibus-setup-input-pad.desktop.in.in.h:1
 msgid "IBus Input Pad Setup"
-msgstr ""
+msgstr "IBus 입력 패드 설정"
 
 #: ../setup/ibus-setup-input-pad.desktop.in.in.h:2
 msgid "Set up IBus Input Pad engine"
-msgstr ""
+msgstr "IBus 입력 패드 엔진 설정"
 
 #: ../setup/setup-gtk.c:360 ../setup/setup-gtk.ui.h:4
 msgid "Default"
@@ -63,15 +62,15 @@ msgstr "기본"
 
 #: ../setup/setup-gtk.c:394
 msgid "Keyboard _Theme:"
-msgstr ""
+msgstr "키보드 테마(_T):"
 
 #: ../setup/setup-gtk.c:397
 msgid "Which theme you choose in kbdui modules"
-msgstr ""
+msgstr "kbdui 모듈에서 당신이 선택한 테마"
 
 #: ../setup/setup-gtk.ui.h:1
 msgid "Nothing"
-msgstr ""
+msgstr "없음"
 
 #: ../setup/setup-gtk.ui.h:2
 msgid "Custom"
@@ -83,31 +82,31 @@ msgstr "모두"
 
 #: ../setup/setup-gtk.ui.h:5
 msgid "IBus-Input-Pad Setup"
-msgstr ""
+msgstr "IBus-입력-패드 설정"
 
 #: ../setup/setup-gtk.ui.h:6
 msgid "_Character Table Type:"
-msgstr ""
+msgstr "문자 테이블 유형(_C):"
 
 #: ../setup/setup-gtk.ui.h:7
 msgid "Whether you show the character table or not"
-msgstr ""
+msgstr "문자 테이블을 표시하거나 아니거나"
 
 #: ../setup/setup-gtk.ui.h:8
 msgid "_Keyboard Layout Type:"
-msgstr ""
+msgstr "키보드 배열 유형(_K):"
 
 #: ../setup/setup-gtk.ui.h:9
 msgid "Whether you show the keyboard layout or not"
-msgstr ""
+msgstr "키보드 배열을 표시하거나 아니거나"
 
 #: ../setup/setup-gtk.ui.h:10
 msgid "<b>Default Appearance</b>"
-msgstr ""
+msgstr "<b>기본 외형</b>"
 
 #: ../setup/setup-gtk.ui.h:11
 msgid "<b>Keyboard Only Appearance</b>"
-msgstr ""
+msgstr "<b>키보드 전용 외형</b>"
 
 #: ../setup/setup-gtk.ui.h:12
 msgid "General"
@@ -135,16 +134,16 @@ msgstr "확인"
 
 #: ../setup/setup-gtk.ui.h:18
 msgid "Are you sure to close Setup?"
-msgstr ""
+msgstr "설정을 종료할까요?"
 
 #: ../setup/setup-gtk.ui.h:19
 msgid "Are you sure to close Setup without saving configure?"
-msgstr ""
+msgstr "구성을 저장하지 않고 설정을 종료할까요?"
 
 #: ../setup/setup-gtk.ui.h:20
 msgid "The input pad engine for IBus platform"
-msgstr ""
+msgstr "IBus 기술환경을 위한 입력 패드 엔진"
 
 #: ../setup/setup-gtk.ui.h:21
 msgid "translator_credits"
-msgstr "simmon <simmon@nplob.com>"
+msgstr "김인수 <simmon@nplob.com>"
