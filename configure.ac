@@ -2,8 +2,8 @@
 #
 # ibus-input-pad - Input pad for IBus
 #
-# Copyright (c) 2010-2014 Takao Fujiwara <takao.fujiwara1@gmail.com>
-# Copyright (c) 2010-2014 Red Hat, Inc.
+# Copyright (c) 2010-2025 Takao Fujiwara <takao.fujiwara1@gmail.com>
+# Copyright (c) 2010-2025 Red Hat, Inc.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -52,7 +52,6 @@ AM_PROG_CC_C_O
 AC_PROG_CXX
 AC_HEADER_STDC
 LT_INIT
-IT_PROG_INTLTOOL([0.35.0])
 
 dnl - For dislpay Date
 m4_define(ibus_datedisplay,
@@ -95,12 +94,12 @@ dnl - define GETTEXT_* variables
 GETTEXT_PACKAGE=ibus-input-pad
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [Gettext package])
-
-AM_GLIB_GNU_GETTEXT
-AM_GLIB_DEFINE_LOCALEDIR(IBUS_LOCALEDIR)
+AM_GNU_GETTEXT_VERSION([0.19.8])
+AM_GNU_GETTEXT([external])
 
 dnl - OUTPUT files
-AC_CONFIG_FILES([ po/Makefile.in
+AC_CONFIG_FILES([
+po/Makefile.in
 Makefile
 ibus-input-pad.spec
 engine/Makefile

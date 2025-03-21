@@ -1,6 +1,6 @@
 [Desktop Entry]
-_Name=IBus Input Pad Setup
-_Comment=Set up IBus Input Pad engine
+Name=IBus Input Pad Setup
+Comment=Set up IBus Input Pad engine
 Exec=@libexecdir@/ibus-setup-input-pad
 Icon=@datadir@/pixmaps/input-pad.png
 NoDisplay=true

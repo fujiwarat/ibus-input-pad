@@ -4,4 +4,4 @@ engine/engine.c
 engine/main.c
 setup/ibus-setup-input-pad.desktop.in.in
 setup/setup-gtk.c
-[type: gettext/glade]setup/setup-gtk.ui
+setup/setup-gtk.ui

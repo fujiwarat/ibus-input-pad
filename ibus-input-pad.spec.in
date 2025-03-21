@@ -19,7 +19,6 @@ BuildRequires:  gtk3-devel              >= %gtk3_version
 BuildRequires:  libtool
 BuildRequires:  ibus-devel              >= %ibus_version
 BuildRequires:  input-pad-devel         >= %input_pad_version
-BuildRequires:  intltool
 Requires:       ibus
 
 %description
