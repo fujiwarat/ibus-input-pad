@@ -2,8 +2,8 @@
 #
 # ibus-input-pad - Input pad for IBus
 #
-# Copyright (c) 2010-2011 Takao Fujiwara <takao.fujiwara1@gmail.com>
-# Copyright (c) 2010-2011 Red Hat, Inc.
+# Copyright (c) 2010-2025 Takao Fujiwara <takao.fujiwara1@gmail.com>
+# Copyright (c) 2010-2025 Red Hat, Inc.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,7 +23,10 @@ SUBDIRS = \
 	po \
 	setup \
 	engine \
+	m4 \
 	$(NULL)
+
+ACLOCAL_AMFLAGS = -I m4
 
 EXTRA_DIST = \
 	ibus-input-pad.spec.in \

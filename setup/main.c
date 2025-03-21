@@ -1,7 +1,7 @@
 /* vim:set et sts=4: */
 /* ibus-input-pad - Input pad for IBus
- * Copyright (C) 2010-2011 Takao Fujiwara <takao.fujiwara1@gmail.com>
- * Copyright (C) 2010-2011 Red Hat, Inc.
+ * Copyright (C) 2010-2025 Takao Fujiwara <takao.fujiwara1@gmail.com>
+ * Copyright (C) 2010-2025 Red Hat, Inc.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -52,7 +52,7 @@ main (int argc, char *argv[])
     GtkWidget *dialog;
 
 #ifdef ENABLE_NLS
-    bindtextdomain (GETTEXT_PACKAGE, IBUS_LOCALEDIR);
+    bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
     bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
     textdomain (GETTEXT_PACKAGE);
 #endif
